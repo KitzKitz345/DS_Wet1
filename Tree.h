@@ -7,10 +7,10 @@
 
 template <class Data, class Key>
 class Tree {
-    Key key; // need to think
+    Key* key; // need to think
     Data* data;
-    Tree* Lson;
-    Tree* Rson;
+    Tree* lson;
+    Tree* rson;
 
 public:
 
