@@ -6,7 +6,6 @@
 #define CODE_TREE_H
 
 #include <exception>
-#include <algorithm>
 
 template <class Data, class Key>
 class Tree {
@@ -36,10 +35,10 @@ public:
     Tree(const Tree& tree) = delete;
 
     class AlreadyExist : public std::exception {};
-    //class EmptyTree : public std::exception {};
+    class EmptyTree : public std::exception {};
 
     Tree& find(Key& key) {
-        if (this == nullptr) {
+        if (this->data == nullptr) {
             return *this; //exception!!!!!!!!!!
         }
         if (this->key == key) {
@@ -55,8 +54,17 @@ public:
         }
     }
 
+    int max(int a, int b)
+    {
+        if (a > b){
+            return a;
+        } else {
+            return b;
+        }
+    }
+
     Data** inorder (Data** data) {
-        if (this == nullptr) {
+        if (this->data == nullptr) {
             return data; //exception!!!!!!!!!!
         }
         this->lson->inorder(data++);
@@ -66,24 +74,51 @@ public:
         return data;
     }
 
-    void LL_Roll () {
-        Tree* temp = this->lson;
+    void LL_Roll_insert () {
+        int size_lson = this->lson->size;
+        this->lson->size = this->size;
+        this->size = size_lson-1;
+
+        this->h_left = this->lson->h_right;
+        this->lson->h_right++;
+
+        Tree* ptr_lson = this->lson;
         this->lson = this->lson->rson;
-        temp->rson = this;
-        this->father = temp;
-    }
+        ptr_lson->rson = this;
 
-    void LR_Roll () {
-
-    }
-
-    int max(int a, int b)
-    {
-        if (a > b){
-            return a;
-        } else {
-            return b;
+        if (this->father->lson == this) {
+            this->father->lson = ptr_lson;
         }
+        if (this->father->rson == this) {
+            this->father->rson = ptr_lson;
+        }
+        this->father = ptr_lson;
+    }
+
+    void RR_Roll_insert () {
+        int size_rson = this->rson->size;
+        this->rson->size = this->size;
+        this->size = size_rson-1;
+
+        this->h_right = this->rson->h_left;
+        this->rson->h_left++;
+
+        Tree* ptr_rson = this->rson;
+        this->rson = this->rson->lson;
+        ptr_rson->lson = this;
+
+        if (this->father->lson == this) {
+            this->father->lson = ptr_rson;
+        }
+        if (this->father->rson == this) {
+            this->father->rson = ptr_rson;
+        }
+        this->father = ptr_rson;
+    }
+
+    void LR_Roll_insert () {
+        this->lson->RR_Roll_insert();
+        this->LL_Roll_insert();
     }
 
     void update_after_insert(){
