@@ -25,7 +25,7 @@ public:
         delete rson;
     }
 
-    Tree(const Tree& tree) = delete;
+    Tree(const Tree& tree) = delete; //h
 
 };
 
