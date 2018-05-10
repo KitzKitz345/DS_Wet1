@@ -16,7 +16,23 @@ class Clan {
     Player* best_player;
 
 public:
+    int getClanId() {
+
+    }
+    Player& getBestPlayer() {
+
+    }
+    void setBestPlayer() {
+
+    }
+
+    //addPlayerToClan
 
 };
+
+/*addClan
+removeClan
+uniteClanTrees
+maybe exceptions*/
 
 #endif //CODE_CLANTREE_H
