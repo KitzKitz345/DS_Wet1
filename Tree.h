@@ -11,9 +11,11 @@ class Tree {
     Data* data;
     Tree* lson;
     Tree* rson;
-    int BF;
+    int h_left;
+    int h_right;
 
 public:
+
 
 };
 
