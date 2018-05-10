@@ -118,7 +118,7 @@ class Tree {
         Tree* T = this;
         while(T->father != nullptr){
             Tree* current_father = T->father;
-            //calculate heights before insertion
+            //calculate heights before insertion!
             int father_height = max(current_father->h_right, current_father->h_left) + 1;
             int son_height = max(T->h_right, T->h_left) + 1;
             if (father_height >= son_height+1){
