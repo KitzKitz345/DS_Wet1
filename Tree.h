@@ -11,15 +11,18 @@ template <class Data, class Key>
 class Tree {
     Key* key; // need to think
     Data* data;
+    Tree* father;
     Tree* lson;
     Tree* rson;
     int h_left;
     int h_right;
+    int size;
 
 public:
-    Tree(Key& key, Data& data): data(data), key(key), lson(nullptr), rson(nullptr){
+    Tree(Key& key, Data& data): data(data), key(key), father(nullptr), lson(nullptr), rson(nullptr){
         h_left = 0;
         h_right = 0;
+        size = 0;
     }
 
     ~Tree(){
@@ -29,13 +32,9 @@ public:
 
     Tree(const Tree& tree) = delete;
 
-    class AlreayExist : public std::exception {};
+    class AlreadyExist : public std::exception {};
     class EmptyTree : public std::exception {};
 
-    void insert(Key& key, Data& data)
-    {
-
-    }
     Tree& find(Key& key) {
         if (this == nullptr) {
             return *this; //exception!!!!!!!!!!
@@ -53,8 +52,27 @@ public:
         }
     }
 
-    Tree(const Tree& tree) = delete; //h
-
+    void insert(Key& key, Data& data) {
+        Tree* T = &this->find(key);
+        if (T->key == key) {
+            throw AlreadyExist();
+        }
+        T->size++;
+        if (T->key > key){
+            T->lson = new Tree(key, data);
+            T->h_left++;
+            T->lson->father = T;
+            T = T->lson;
+            T->size++;
+        } else {
+            T->rson = new Tree(key, data);
+            T->h_right++;
+            T->rson->father = T;
+            T = T->rson;
+            T->size++;
+        }
+        void balance()
+    }
 };
 
 #endif //CODE_TREE_H
