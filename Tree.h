@@ -5,6 +5,8 @@
 #ifndef CODE_TREE_H
 #define CODE_TREE_H
 
+#include <exception>
+
 template <class Data, class Key>
 class Tree {
     Key* key; // need to think
@@ -25,6 +27,15 @@ public:
         delete rson;
     }
 
+    Tree(const Tree& tree) = delete;
+
+    class AlreayExist : public std::exception {};
+    class EmptyTree : public std::exception {};
+
+    void insert(Key& key, Data& data)
+    {
+
+    }
     Tree& find(Key& key) {
         if (this == nullptr) {
             return *this; //exception!!!!!!!!!!!
@@ -43,7 +54,6 @@ public:
     }
 
     Tree(const Tree& tree) = delete; //h
-
 
 };
 
