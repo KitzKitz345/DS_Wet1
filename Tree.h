@@ -121,18 +121,37 @@ public:
         this->LL_Roll_insert();
     }
 
-    void update_after_insert(){
-        Tree* T = this->father;
-        while (T != nullptr){
-            int size = 1;
+    void update_heights(){
+        Tree* T = this;
             if (T->lson != nullptr){
                 T->h_left = 1+ max(T->lson->h_left, T->lson->h_right);
             }
             if (T->rson != nullptr){
                 T->h_right = 1 + max(T->rson->h_left, T->rson->h_right);
             }
-            T = T->father;
+    }
+
+    void balance() {
+        Tree* T = this;
+        while(T->father != nullptr){
+            father = T->father;
+            //calculate heights before insertion
+            int father_height = max(father->h_right, father->h_left) + 1;
+            int son_height = max(T->h_right, T->h_left) + 1;
+            if (father_height >= son_height+1){
+                father->update_heights();
+                return;
+            }
+            father->update_heights();
+            if(father->h_left - father->h_right >= 2 || father->h_left - father->h_right <= -2){
+
+                return;
+            } else {
+
+            }
+
         }
+
     }
 
     void insert(Key& key, Data& data) {
@@ -158,7 +177,8 @@ public:
             T->size++;
         }
         T->update_after_insert();
-        void balance();
+
+        T->balance();
     }
 };
 
