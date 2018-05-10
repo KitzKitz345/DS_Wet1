@@ -5,6 +5,8 @@
 #ifndef CODE_TREE_H
 #define CODE_TREE_H
 
+#include <exception>
+
 template <class Data, class Key>
 class Tree {
     Key* key; // need to think
@@ -15,7 +17,7 @@ class Tree {
     int h_right;
 
 public:
-    Tree(Key& key, Data& data): data(data), key(key), lson(nullptr), rson(nullptr){
+    Tree(Key& key, Data& data):data(data), key(key), lson(nullptr), rson(nullptr){
         h_left = 0;
         h_right = 0;
     }
@@ -25,7 +27,15 @@ public:
         delete rson;
     }
 
-    Tree(const Tree& tree) = delete; //h
+    Tree(const Tree& tree) = delete;
+
+    class AlreayExist : public std::exception {};
+    class EmptyTree : public std::exception {};
+
+    void insert(Key& key, Data& data)
+    {
+
+    }
 
 };
 
