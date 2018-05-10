@@ -16,7 +16,7 @@ class Tree {
     Tree* rson;
     int h_left;
     int h_right;
-    int size;
+    int size; // size includes left tree, right tree and current node. needs to add to system description.
 
 public:
     Tree(Key& key, Data& data): data(data), key(key), father(nullptr), lson(nullptr), rson(nullptr){
@@ -52,6 +52,27 @@ public:
         }
     }
 
+    Data** inorder (Data** data) {
+        if (this == nullptr) {
+            return data; //exception!!!!!!!!!!
+        }
+        this->lson->inorder(data++);
+        data = this->data;
+        data++;
+        this->rson->inorder(data++);
+        return data;
+    }
+
+    void LL_Roll () {
+        Tree* temp = this->lson;
+        this->lson = this->lson->rson;
+        temp->rson = this;
+        this->father = temp;
+    }
+
+    void LR_Roll () {
+
+    }
     void insert(Key& key, Data& data) {
         Tree* T = &this->find(key);
         if (T->key == key) {
