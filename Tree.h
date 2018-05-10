@@ -15,7 +15,17 @@ class Tree {
     int h_right;
 
 public:
+    Tree(Key& key, Data& data): data(data), key(key), lson(nullptr), rson(nullptr){
+        h_left = 0;
+        h_right = 0;
+    }
 
+    ~Tree(){
+        delete lson;
+        delete rson;
+    }
+
+    Tree(const Tree& tree) = delete;
 
 };
 
