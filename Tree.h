@@ -18,42 +18,6 @@ class Tree {
     int h_right;
     int size; // size includes left tree, right tree and current node. needs to add to system description.
 
-public:
-    Tree(): data(nullptr), key(nullptr), father(nullptr), lson(nullptr), rson(nullptr){}
-
-    Tree(Key& key, Data& data): data(data), key(key), father(nullptr), lson(nullptr), rson(nullptr){
-        h_left = 0;
-        h_right = 0;
-        size = 0;
-    }
-
-    ~Tree(){
-        delete lson;
-        delete rson;
-    }
-
-    Tree(const Tree& tree) = delete;
-
-    class AlreadyExist : public std::exception {};
-    class EmptyTree : public std::exception {};
-
-    Tree& find(Key& key) {
-        if (this->data == nullptr) {
-            return *this; //exception!!!!!!!!!!
-        }
-        if (this->key == key) {
-            return *this;
-        }
-        else {
-            if (this->key > key) {
-                return this->lson->find(key);
-            }
-            else {
-                return this->rson->find(key);
-            }
-        }
-    }
-
     int max(int a, int b)
     {
         if (a > b){
@@ -61,17 +25,6 @@ public:
         } else {
             return b;
         }
-    }
-
-    Data** inorder (Data** data) {
-        if (this->data == nullptr) {
-            return data; //exception!!!!!!!!!!
-        }
-        this->lson->inorder(data++);
-        data = this->data;
-        data++;
-        this->rson->inorder(data++);
-        return data;
     }
 
     void LL_Roll_insert () {
@@ -121,38 +74,104 @@ public:
         this->LL_Roll_insert();
     }
 
+    void find_roll(){
+        int BF = this->h_left - this->h_right;
+        int lson_BF = this->lson->h_left - this->lson->h_right;
+        int rson_BF = this->rson->h_left - this->rson->h_right;
+        if (BF == 2){
+            if(lson_BF >= 0){
+                this->LL_Roll_insert();
+            } else if (lson_BF == -1){
+                this->LR_Roll_insert();
+            }
+        } else if (BF == -2){
+            if(lson_BF <= 0){
+                this->RR_Roll_insert();
+            } else if (lson_BF == 1){
+                this->RL_Roll_insert();
+            }
+        }
+    }
+
     void update_heights(){
         Tree* T = this;
-            if (T->lson != nullptr){
-                T->h_left = 1+ max(T->lson->h_left, T->lson->h_right);
-            }
-            if (T->rson != nullptr){
-                T->h_right = 1 + max(T->rson->h_left, T->rson->h_right);
-            }
+        if (T->lson != nullptr){
+            T->h_left = 1+ max(T->lson->h_left, T->lson->h_right);
+        }
+        if (T->rson != nullptr){
+            T->h_right = 1 + max(T->rson->h_left, T->rson->h_right);
+        }
     }
 
     void balance() {
         Tree* T = this;
         while(T->father != nullptr){
-            father = T->father;
+            Tree* current_father = T->father;
             //calculate heights before insertion
-            int father_height = max(father->h_right, father->h_left) + 1;
+            int father_height = max(current_father->h_right, current_father->h_left) + 1;
             int son_height = max(T->h_right, T->h_left) + 1;
             if (father_height >= son_height+1){
-                father->update_heights();
+                current_father->update_heights();
                 return;
             }
-            father->update_heights();
-            if(father->h_left - father->h_right >= 2 || father->h_left - father->h_right <= -2){
-
+            current_father->update_heights();
+            int BF = current_father->h_left - current_father->h_right;
+            if(BF >= 2 || BF <= -2){
+                current_father->find_roll();
                 return;
             } else {
-
+                T = current_father;
             }
-
         }
-
     }
+
+public:
+    Tree(): data(nullptr), key(nullptr), father(nullptr), lson(nullptr), rson(nullptr){}
+
+    Tree(Key& key, Data& data): data(data), key(key), father(nullptr), lson(nullptr), rson(nullptr){
+        h_left = 0;
+        h_right = 0;
+        size = 0;
+    }
+
+    ~Tree(){
+        delete lson;
+        delete rson;
+    }
+
+    Tree(const Tree& tree) = delete;
+
+    class AlreadyExist : public std::exception {};
+    class EmptyTree : public std::exception {};
+
+    Tree& find(Key& key) {
+        if (this->data == nullptr) {
+            return *this; //exception!!!!!!!!!!
+        }
+        if (this->key == key) {
+            return *this;
+        }
+        else {
+            if (this->key > key) {
+                return this->lson->find(key);
+            }
+            else {
+                return this->rson->find(key);
+            }
+        }
+    }
+
+    Data** inorder (Data** data) {
+        if (this->data == nullptr) {
+            return data; //exception!!!!!!!!!!
+        }
+        this->lson->inorder(data++);
+        data = this->data;
+        data++;
+        this->rson->inorder(data++);
+        return data;
+    }
+
 
     void insert(Key& key, Data& data) {
         Tree* T = &this->find(key);
@@ -169,16 +188,16 @@ public:
             T->lson = new Tree(key, data);
             T->lson->father = T;
             T = T->lson;
-            T->size++;
         } else {
             T->rson = new Tree(key, data);
             T->rson->father = T;
             T = T->rson;
-            T->size++;
         }
-        T->update_after_insert();
-
         T->balance();
+        while(T != nullptr){
+            T->size++;
+            T = T->father;
+        }
     }
 };
 
