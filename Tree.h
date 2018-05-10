@@ -25,7 +25,25 @@ public:
         delete rson;
     }
 
+    Tree& find(Key& key) {
+        if (this == nullptr) {
+            return *this; //exception!!!!!!!!!!!!!
+        }
+        if (this->key == key) {
+            return *this;
+        }
+        else {
+            if (this->key > key) {
+                return this->lson->find(key);
+            }
+            else {
+                return this->rson->find(key);
+            }
+        }
+    }
+
     Tree(const Tree& tree) = delete; //h
+
 
 };
 
