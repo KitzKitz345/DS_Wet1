@@ -183,6 +183,7 @@ public:
         return data;
     }
 
+
     void insert(Key& key, Data& data) {
         Tree* T = &this->find(key);
         if (T->data == nullptr){
@@ -198,16 +199,16 @@ public:
             T->lson = new Tree(key, data);
             T->lson->father = T;
             T = T->lson;
-            T->size++;
         } else {
             T->rson = new Tree(key, data);
             T->rson->father = T;
             T = T->rson;
-            T->size++;
         }
-        T->update_after_insert();
-
         T->balance();
+        while(T != nullptr){
+            T->size++;
+            T = T->father;
+        }
     }
 };
 
