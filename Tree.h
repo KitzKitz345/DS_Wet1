@@ -27,13 +27,13 @@ class Tree {
         }
     }
 
-    void LL_Roll_insert () {
+    void LL_Roll () {
         int size_lson = this->lson->size;
         this->lson->size = this->size;
         this->size = size_lson-1;
 
-        this->h_left = this->lson->h_right;
-        this->lson->h_right++;
+        //this->h_left = this->lson->h_right;
+        //this->lson->h_right++;
 
         Tree* ptr_lson = this->lson;
         this->lson = this->lson->rson;
@@ -46,15 +46,18 @@ class Tree {
             this->father->rson = ptr_lson;
         }
         this->father = ptr_lson;
+
+        this->update_heights();
+        this->father->update_heights();
     }
 
-    void RR_Roll_insert () {
+    void RR_Roll () {
         int size_rson = this->rson->size;
         this->rson->size = this->size;
         this->size = size_rson-1;
 
-        this->h_right = this->rson->h_left;
-        this->rson->h_left++;
+        //this->h_right = this->rson->h_left;
+        //this->rson->h_left++;
 
         Tree* ptr_rson = this->rson;
         this->rson = this->rson->lson;
@@ -67,11 +70,19 @@ class Tree {
             this->father->rson = ptr_rson;
         }
         this->father = ptr_rson;
+
+        this->update_heights();
+        this->father->update_heights();
     }
 
-    void LR_Roll_insert () {
-        this->lson->RR_Roll_insert();
-        this->LL_Roll_insert();
+    void LR_Roll () {
+        this->lson->RR_Roll();
+        this->LL_Roll();
+    }
+
+    void RL_Roll () {
+        this->rson->LL_Roll();
+        this->RR_Roll();
     }
 
     void find_roll(){
@@ -172,7 +183,6 @@ public:
         return data;
     }
 
-
     void insert(Key& key, Data& data) {
         Tree* T = &this->find(key);
         if (T->data == nullptr){
@@ -188,16 +198,16 @@ public:
             T->lson = new Tree(key, data);
             T->lson->father = T;
             T = T->lson;
+            T->size++;
         } else {
             T->rson = new Tree(key, data);
             T->rson->father = T;
             T = T->rson;
-        }
-        T->balance();
-        while(T != nullptr){
             T->size++;
-            T = T->father;
         }
+        T->update_after_insert();
+
+        T->balance();
     }
 };
 
