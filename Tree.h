@@ -91,15 +91,15 @@ class Tree {
         int rson_BF = this->rson->h_left - this->rson->h_right;
         if (BF == 2){
             if(lson_BF >= 0){
-                this->LL_Roll_insert();
+                this->LL_Roll();
             } else if (lson_BF == -1){
-                this->LR_Roll_insert();
+                this->LR_Roll();
             }
         } else if (BF == -2){
             if(lson_BF <= 0){
-                this->RR_Roll_insert();
+                this->RR_Roll();
             } else if (lson_BF == 1){
-                this->RL_Roll_insert();
+                this->RL_Roll();
             }
         }
     }
