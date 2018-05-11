@@ -16,7 +16,7 @@ class Clan {
     Player* best_player;
 
 public:
-    Clan(int id);
+    explicit Clan(int id);
     ~Clan();
     Clan(const Clan& clan) = delete;
     int getClanId();
