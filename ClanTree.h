@@ -16,23 +16,20 @@ class Clan {
     Player* best_player;
 
 public:
-    int getClanId() {
-
-    }
-    Player& getBestPlayer() {
-
-    }
-    void setBestPlayer() {
-
-    }
-
-    //addPlayerToClan
-
+    Clan(int id);
+    ~Clan();
+    Clan(const Clan& clan) = delete;
+    int getClanId();
+    Player& getBestPlayer();
+    void setBestPlayer();
+    void joinClan(Player& new_player);
+    void getScoreBoard(int **players, int *numOfPlayers);
 };
 
-/*addClan
-removeClan
-uniteClanTrees
-maybe exceptions*/
+//maybe exceptions
+
+void addClan(Tree<Clan, int> clan_tree, int id);
+void uniteClans(Tree<Clan, int> clan_tree, int id1, int id2);
+
 
 #endif //CODE_CLANTREE_H
