@@ -74,17 +74,43 @@ StatusType completeChallange(void *DS, int playerID, int coins) {
     return SUCCESS;
 }
 
-/* Description:   Joins two clans, leaving the players with no comlpeted challanges out of the new clan.
- * Input:         DS - A pointer to the data structure.
- *                clanID1 - ID of the first clan.
- *		          clanID2 - ID of the second clan.
- * Output:        None.
- * Return Values: ALLOCATION_ERROR - In case of an allocation error.
- *                INVALID_INPUT - If DS==NULL, or if clanID1<=0, or if clanID2<=0
- *                FAILURE - If clanID1 or clanID2 are not in the DS.
- *                SUCCESS - Otherwise.
- */
+StatusType getBestPlayer(void *DS, int clanID, int *playerID){
+    if (clanID == 0 || DS == nullptr || playerID == nullptr){
+        return INVALID_INPUT;
+    }
+    try{
+        ((Oasis*)DS)->getBestPlayer(clanID, playerID);
+    } catch (Tree::DoesNotExist& e){
+        return FAILURE;
+    }
+    return SUCCESS;
+}
+
+StatusType getScoreboard(void *DS, int clanID, int **players, int *numOfPlayers){
+    if (DS == nullptr || clanID == 0 || players == nullptr || numOfPlayers == nullptr){
+        return INVALID_INPUT;
+    }
+    try {
+        ((Oasis*)DS)->getScoreboard(clanID, players, numOfPlayers);
+    } catch (Tree::DoesNotExist& e) {
+        return FAILURE;
+    } catch (std::bad_alloc& e) {
+        return ALLOCATION_ERROR;
+    }
+    return SUCCESS;
+}
+
 StatusType uniteClans(void *DS, int clanID1, int clanID2)
 {
-
+    if (DS == nullptr || clanID1 <= 0 || clanID2 <= 0 || clanID1 == clanID2){
+        return INVALID_INPUT;
+    }
+    try {
+        ((Oasis*)DS)->uniteClans(clanID1, clanID2);
+    } catch (Tree::DoesNotExist& e) {
+        return FAILURE;
+    } catch (std::bad_alloc& e) {
+        return ALLOCATION_ERROR;
+    }
+    return SUCCESS;
 }

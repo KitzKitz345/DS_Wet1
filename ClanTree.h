@@ -25,6 +25,7 @@ public:
     void getPlayers(Player** player_arr);
     void joinClan(Player& new_player);
     void getScoreBoard(int **players, int *numOfPlayers);
+    void completedChallenge(Player& player);
 };
 
 //maybe exceptions

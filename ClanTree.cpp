@@ -31,7 +31,9 @@ void Clan::joinClan(Player &new_player) {
     if (new_player.getClanId() == -1){
         throw ClanTree::AlreadyInClan();
     }
-    if (new_player.getChallenges() > this->best_player->getChallenges()){
+    if (this->best_player == nullptr){
+        this->best_player = &new_player;
+    } else if (new_player.getChallenges() > this->best_player->getChallenges()){
         this->best_player = &new_player;
     } else if(new_player.getChallenges() == this->best_player->getChallenges()){
         if (new_player.getPlayerId() < this->best_player->getPlayerId()){
@@ -53,6 +55,16 @@ void Clan::getScoreBoard(int **players, int *numOfPlayers){
     CoinTree::getScoreBoard(this->players_by_coins, players, numOfPlayers);
 }
 
+void Clan::completedChallenge(Player& player){
+    //Remove and insert to coin tree using coin tree function completeChallenge
+    if (player.getChallenges() > this->best_player->getChallenges()){
+        if (player.getPlayerId() < this->best_player->getPlayerId()){
+            this->best_player = &player;
+        }
+    }
+}
+
+
 void ClanTree::addClan(Tree<Clan, int>* clan_tree, int id){
     if (clan_tree->find(id).getData().getClanId() == id){
         throw Tree::AlreadyExist();
@@ -64,6 +76,9 @@ void ClanTree::addClan(Tree<Clan, int>* clan_tree, int id){
 void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
     Clan* clan1 = &(clan_tree->find(id1).getData());
     Clan* clan2 = &(clan_tree->find(id2).getData());
+    if (clan1->getClanId() != id1 || clan2->getClanId() != id2){
+        throw Tree::DoesNotExist();
+    }
     Clan* to = nullptr;
     Clan* from = nullptr;
     if (clan1->getSize() > clan2->getSize()){

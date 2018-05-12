@@ -19,12 +19,13 @@ public:
     explicit Oasis(); //need to finish constructor
     ~Oasis(); // need to finish destructor
     Oasis(const Oasis& oasis) = delete;
-    Tree<Player,int>* getPlayersTree();
-    Tree<Player,Pair>* getCoinTree();
     void addClan(int clanID);
     void joinClan(int playerID, int clanID);
     void insertPlayer(Player& player);
     void completeChallenge(int playerId, int coins);
+    void getBestPlayer(int clanID, int *playerID);
+    void getScoreboard(int clanID, int **players, int *numOfPlayers);
+    void uniteClans(int clanID1, int clanID2);
 };
 
 #endif //CODE_OASIS_H

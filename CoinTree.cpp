@@ -19,6 +19,7 @@ bool operator>(const Pair& p) const {
 
 void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *numOfPlayers){
     int n = coin_tree->getSize();
+    *numOfPlayers = n;
     Player** player_arr = new Player*[n];
     coin_tree->inorder(player_arr);
     *players = (int*)malloc(n*sizeof(int));
