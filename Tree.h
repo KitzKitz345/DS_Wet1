@@ -243,6 +243,10 @@ public:
         return this->size;
     }
 
+    Data& getData(){
+        return *(this->data);
+    }
+
     class AlreadyExist : public std::exception {};
     class DoesNotExist : public std::exception {};
     class EmptyTree : public std::exception {};

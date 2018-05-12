@@ -21,6 +21,8 @@ public:
     Clan(const Clan& clan) = delete;
     int getClanId();
     int getBestPlayer();
+    int getSize();
+    void getPlayers(Player** player_arr);
     void joinClan(Player& new_player);
     void getScoreBoard(int **players, int *numOfPlayers);
 };
