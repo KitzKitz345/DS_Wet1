@@ -5,33 +5,44 @@
 #ifndef CODE_PLAYERTREE_H
 #define CODE_PLAYERTREE_H
 
+#include "Tree.h"
+
 class Player {
     int player_id;
     int coins;
     int challenges;
 public:
-    Player (int id, int coins, int challenges) : player_id(id), coins(coins), challenges
+    explicit Player (int id, int coins, int challenges) : player_id(id), coins(coins), challenges
             (challenges){}
 
-    int getPlayerId() {
+    ~Player();
 
+    Player(const Player& player) = delete;
+
+    int getPlayerId() {
+        return this->player_id;
     }
     int getCoins() {
-
+        return this->coins;
     }
     int getChallenges() {
-
+        return this->challenges;
     }
-    void setCoins() {
-
+    void addCoins(int coins) {
+        this->coins += coins;
     }
-    void setChallenges() {
-
+    void incChallenges() {
+        this->challenges++;
     }
-
 };
 
-/*addPlayer
+//should new_player tree needs *?
+void addPlayer (Tree<Player, int>* player_tree, int player_id, int coins) {
+    Player* new_player = new Player(player_id,coins,0);
+    player_tree->insert(player_id,*new_player);
+}
+
+/*
 removePlayer
 unitePlayerTrees
 maybe exceptions*/

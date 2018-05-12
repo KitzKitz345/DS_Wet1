@@ -4,4 +4,4 @@ project(code)
 set(CMAKE_CXX_STANDARD 98)
 
 add_executable(code main1.cpp library1.h PlayerTree.cpp PlayerTree.h ClanTree.cpp ClanTree.h Tree.h CoinTree.cpp
-        CoinTree.h Oasis.cpp Oasis.h Pair.h)
+        CoinTree.h Oasis.h Pair.h library1.cpp)
