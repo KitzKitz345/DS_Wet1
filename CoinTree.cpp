@@ -6,6 +6,15 @@
 #include "CoinTree.h"
 #include "PlayerTree.h"
 
+explicit Pair::Pair(int id, int coin) : id(id), coin(coin){}
+
+bool operator==(const Pair& p) const{
+    return (this->id == p.id) && (this->coin == p.coin);
+}
+
+bool operator>(const Pair& p) const {
+    return (this->coin > p.coin) || ((this->coin == p.coin) && (this->id < p.id));
+}
 
 void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *numOfPlayers){
     int n = coin_tree->getSize();
@@ -16,4 +25,9 @@ void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *
         *((*players)+i) = (*(player_arr+i))->getPlayerId();
     }
     delete player_arr;
+}
+
+void CoinTree::insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Player& player) {
+    Pair* player_id = new Pair(player.getPlayerId(), player.getCoins());
+    coin_tree->insert(*player_id, player);
 }

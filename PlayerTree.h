@@ -14,38 +14,22 @@ class Player {
     int clan_id;
 
 public:
-    explicit Player (int id, int coins, int challenges, int clan_id) : player_id(id), coins(coins),
-             challenges (challenges), clan_id(clan_id){}
-
+    explicit Player(int id, int coins, int challenges, int clan_id);
     ~Player();
-
     Player(const Player& player) = delete;
-
-    int getPlayerId() {
-        return this->player_id;
-    }
-    int getCoins() {
-        return this->coins;
-    }
-    int getChallenges() {
-        return this->challenges;
-    }
-    int getClanId() {
-        return this->clan_id;
-    }
-    void addCoins(int coins) {
-        this->coins += coins;
-    }
-    void incChallenges() {
-        this->challenges++;
-    }
+    int getPlayerId();
+    int getCoins();
+    int getChallenges();
+    int getClanId();
+    void setClanId(int new_id);
+    void addCoins(int coins);
+    void incChallenges();
 };
 
-//should new_player tree needs *?
-void addPlayer (Tree<Player, int>* player_tree, int player_id, int coins) {
-    Player* new_player = new Player(player_id,coins,0,-1);
-    player_tree->insert(player_id,*new_player);
+namespace PlayerTree {
+    void insertPlayer(Tree<Player, int>* player_tree, Player& player);
 }
+
 
 /*
 removePlayer

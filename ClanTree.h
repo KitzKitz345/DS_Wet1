@@ -7,7 +7,7 @@
 
 #include "PlayerTree.h"
 #include "Tree.h"
-#include "Pair.h"
+#include "CoinTree.h"
 
 class Clan {
     int clan_id;

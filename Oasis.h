@@ -7,7 +7,6 @@
 
 #include "PlayerTree.h"
 #include "ClanTree.h"
-#include "Pair.h"
 #include "CoinTree.h"
 
 class Oasis {
@@ -17,7 +16,15 @@ class Oasis {
     Player* best_player;
 
 public:
-
+    explicit Oasis(); //need to finish constructor
+    ~Oasis(); // need to finish destructor
+    Oasis(const Oasis& oasis) = delete;
+    Tree<Player,int>* getPlayersTree();
+    Tree<Player,Pair>* getCoinTree();
 };
+
+namespace OasisFuncs {
+    void insertPlayer(Oasis* oasis, Player& player);
+}
 
 #endif //CODE_OASIS_H
