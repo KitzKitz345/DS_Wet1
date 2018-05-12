@@ -57,7 +57,6 @@ StatusType joinClan(void *DS, int playerID, int clanID){
     return SUCCESS;
 }
 
-//should divide into to funcs like addplayer?
 StatusType completeChallange(void *DS, int playerID, int coins) {
     if (DS == nullptr || playerID <= 0 || coins < 0) {
         return INVALID_INPUT;
