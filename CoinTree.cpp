@@ -32,6 +32,14 @@ void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *
 }
 
 void CoinTree::insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Player& player) {
-    Pair* player_id = new Pair(player.getPlayerId(), player.getCoins());
-    coin_tree->insert(*player_id, player);
+    Pair* p = new Pair(player.getPlayerId(), player.getCoins()); // should do delete?
+    coin_tree->insert(*p, player);
+}
+
+void CoinTree::completeChallenge(Tree<Player, Pair>* coin_tree, int playerId, int coins) {
+    Pair* p = new Pair(playerId, coins); // should do delete?
+    Tree<Player, Pair>& node = coin_tree->find(*p); // should be &??
+    Player& player = node.getData(); // should be &??
+    coin_tree->remove(*p);
+    coin_tree->insert(*p, player);
 }

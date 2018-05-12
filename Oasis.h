@@ -22,10 +22,8 @@ public:
     Tree<Player,int>* getPlayersTree();
     Tree<Player,Pair>* getCoinTree();
     void addClan(int clanID);
+    void insertPlayer(Player& player);
+    void completeChallenge(int playerId, int coins);
 };
-
-namespace OasisFuncs {
-    void insertPlayer(Oasis* oasis, Player& player);
-}
 
 #endif //CODE_OASIS_H

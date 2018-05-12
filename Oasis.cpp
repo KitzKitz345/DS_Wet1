@@ -8,10 +8,12 @@ explicit Oasis::Oasis() : best_player(nullptr) {
 
 }
 
-Tree<Player,int>* Oasis::getPlayersTree () {
-    return this->(*players);
+void Oasis::insertPlayer(Player& player) {
+    PlayerTree::insertPlayer(this->players, player);
+    CoinTree::insertPlayerByCoin(this->players_by_coins, player);
 }
-Tree<Player,Pair>* Oasis::getCoinTree () {
-    return this->(*players_by_coins);
-};
 
+void Oasis::completeChallenge(int playerId, int coins) {
+    PlayerTree::completeChallenge(this->players, playerId, coins);
+    CoinTree::completeChallenge(this->players_by_coins, playerId, coins);
+}
