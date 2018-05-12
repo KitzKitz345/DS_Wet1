@@ -31,6 +31,9 @@ public:
 //class aaa : public std::exception {};
 
 namespace ClanTree{
+
+    class AlreadyInClan : public std::exception {};
+
     void addClan(Tree<Clan, int>* clan_tree, int id);
     void uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2);
 }

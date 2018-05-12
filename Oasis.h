@@ -22,6 +22,7 @@ public:
     Tree<Player,int>* getPlayersTree();
     Tree<Player,Pair>* getCoinTree();
     void addClan(int clanID);
+    void joinClan(int playerID, int clanID);
     void insertPlayer(Player& player);
     void completeChallenge(int playerId, int coins);
 };

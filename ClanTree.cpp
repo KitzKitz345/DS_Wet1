@@ -28,6 +28,9 @@ void Clan::getPlayers(Player** player_arr){
 }
 
 void Clan::joinClan(Player &new_player) {
+    if (new_player.getClanId() == -1){
+        throw ClanTree::AlreadyInClan();
+    }
     if (new_player.getChallenges() > this->best_player->getChallenges()){
         this->best_player = &new_player;
     } else if(new_player.getChallenges() == this->best_player->getChallenges()){
@@ -51,6 +54,9 @@ void Clan::getScoreBoard(int **players, int *numOfPlayers){
 }
 
 void ClanTree::addClan(Tree<Clan, int>* clan_tree, int id){
+    if (clan_tree->find(id).getData().getClanId() == id){
+        throw Tree::AlreadyExist();
+    }
     Clan* new_clan = new Clan(id);
     clan_tree->insert(id, *new_clan);
 }
@@ -80,7 +86,9 @@ void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
     from->getPlayers(player_arr);
     for(int i = 0; i < n; i++){
         (*(player_arr+i))->setClanId(-1);
-        to->joinClan(**(player_arr+i));
+        if ((*(player_arr+i))->getChallenges() != 0){
+            to->joinClan(**(player_arr+i));
+        }
     }
     delete player_arr;
     int id_to_remove = from->getClanId();
