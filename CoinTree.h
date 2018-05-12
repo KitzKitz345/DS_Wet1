@@ -5,6 +5,8 @@
 #ifndef CODE_COINTREE_H
 #define CODE_COINTREE_H
 
+#include "PlayerTree.h"
+
 class Pair {
     int id;
     int coin;
@@ -16,7 +18,12 @@ public:
 
 };
 
-/*addPlayer
+namespace CoinTree{
+    void getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *numOfPlayers);
+}
+
+/*insertPlayer (player already exists)
+ *
 removePlayer
 unitePlayerTrees
 maybe exceptions*/

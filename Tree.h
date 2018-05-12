@@ -239,6 +239,10 @@ public:
 
     Tree(const Tree& tree) = delete;
 
+    int getSize(){
+        return this->size;
+    }
+
     class AlreadyExist : public std::exception {};
     class DoesNotExist : public std::exception {};
     class EmptyTree : public std::exception {};

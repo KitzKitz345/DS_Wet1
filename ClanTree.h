@@ -17,19 +17,23 @@ class Clan {
 
 public:
     explicit Clan(int id);
-    ~Clan();
+    ~Clan() = default;
     Clan(const Clan& clan) = delete;
     int getClanId();
-    Player& getBestPlayer();
-    void setBestPlayer();
+    int getBestPlayer();
     void joinClan(Player& new_player);
     void getScoreBoard(int **players, int *numOfPlayers);
 };
 
 //maybe exceptions
+//class aaa : public std::exception {};
 
-void addClan(Tree<Clan, int> clan_tree, int id);
-void uniteClans(Tree<Clan, int> clan_tree, int id1, int id2);
+namespace ClanTree{
+    void addClan(Tree<Clan, int>* clan_tree, int id);
+    void uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2);
+}
+
+
 
 
 #endif //CODE_CLANTREE_H
