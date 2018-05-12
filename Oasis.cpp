@@ -31,13 +31,17 @@ void Oasis::joinClan(int playerID, int clanID)
     clan->joinClan(*player);
 }
 
+//need to add another check if the edited player is the best in the entire system
 void Oasis::completeChallenge(int playerId, int coins) {
+    CoinTree::removePlayer(this->players_by_coins, playerId, coins);
     PlayerTree::completeChallenge(this->players, playerId, coins);
-    CoinTree::completeChallenge(this->players_by_coins, playerId, coins);
+    Player& player = this->players->find(playerId).getData(); // should be declared like that?
+    CoinTree::insertPlayerByCoin(this->players_by_coins, player);
     Player* advanced_player = &(this->players->find(playerId).getData());
     int clan_of_player = advanced_player->getClanId();
     if (clan_of_player != -1){
-        Clan* clan = &(this->clans->find(clan_of_player).getData());
+        Clan* clan = &(this->clans->find(clan_of_player).getData()); // not good! logk, talk to
+                // tsvitzikle
         clan->completedChallenge(*advanced_player);
     }
 }

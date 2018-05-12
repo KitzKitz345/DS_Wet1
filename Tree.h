@@ -253,29 +253,41 @@ public:
 
     Tree& find(Key& key) {
         if (this->data == nullptr) {
-            return *this; //exception!!!!!!!!!!
+            throw EmptyTree(); // need to catch this somewhere
         }
         if (this->key == key) {
             return *this;
         }
         else {
             if (this->key > key) {
-                return this->lson->find(key);
+                if (this->lson == nullptr) {
+                    return *this;
+                } else {
+                    return this->lson->find(key);
+                }
             }
             else {
-                return this->rson->find(key);
+                if (this->rson == nullptr) {
+                    return *this;
+                } else {
+                    return this->rson->find(key);
+                }
             }
         }
     }
 
     Data** inorder (Data** data) {
         if (this->data == nullptr) {
-            return data; //exception!!!!!!!!!!
+            throw EmptyTree(); // need to catch this somewhere
         }
-        this->lson->inorder(data++);
-        data = this->data;
+        if (this->lson != nullptr) {
+            this->lson->inorder(data++);
+        }
+        data = this->data; // needs an operator overloading?
         data++;
-        this->rson->inorder(data++);
+        if (this->rson != nullptr) {
+            this->rson->inorder(data++);
+        }
         return data;
     }
 

@@ -37,10 +37,7 @@ void CoinTree::insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Player& player)
     coin_tree->insert(*p, player);
 }
 
-void CoinTree::completeChallenge(Tree<Player, Pair>* coin_tree, int playerId, int coins) {
+void CoinTree::removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coins) {
     Pair* p = new Pair(playerId, coins); // should do delete?
-    Tree<Player, Pair>& node = coin_tree->find(*p); // should be &??
-    Player& player = node.getData(); // should be &??
     coin_tree->remove(*p);
-    coin_tree->insert(*p, player);
 }

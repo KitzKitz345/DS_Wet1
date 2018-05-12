@@ -24,12 +24,11 @@ public:
 namespace CoinTree{
     void getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *numOfPlayers);
     void insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Player& player);
-    void completeChallenge(Tree<Player, Pair>* coin_tree, int playerId, int coins);
+    void removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coins);
 }
 
 
 /*
-removePlayer
 unitePlayerTrees
 maybe exceptions*/
 
