@@ -3,7 +3,6 @@
 //
 
 #include <cstdlib>
-#include <new>
 #include "ClanTree.h"
 #include "CoinTree.h"
 
@@ -37,10 +36,9 @@ void Clan::joinClan(Player &new_player) {
         }
     }
     int* id_key = new int(new_player.getPlayerId());
-    new_player->changeClan(this->clan_id);
-    this->players->insert(*id_key, new_player);
-    this->players_by_coins->insert();
-
+    new_player.setClanId(this->clan_id);
+    PlayerTree::insertPlayer(this->players, new_player);
+    CoinTree::insertPlayerByCoin(this->players_by_coins, new_player);
 }
 
 void Clan::getScoreBoard(int **players, int *numOfPlayers){
@@ -81,7 +79,7 @@ void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
     Player** player_arr = new Player*[n];
     from->getPlayers(player_arr);
     for(int i = 0; i < n; i++){
-        (*(player_arr+i))->changeClan(-1);
+        (*(player_arr+i))->setClanId(-1);
         to->joinClan(**(player_arr+i));
     }
     delete player_arr;

@@ -21,6 +21,7 @@ public:
     Oasis(const Oasis& oasis) = delete;
     Tree<Player,int>* getPlayersTree();
     Tree<Player,Pair>* getCoinTree();
+    void addClan(int clanID);
 };
 
 namespace OasisFuncs {

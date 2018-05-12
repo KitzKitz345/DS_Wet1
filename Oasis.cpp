@@ -14,3 +14,4 @@ Tree<Player,int>* Oasis::getPlayersTree () {
 Tree<Player,Pair>* Oasis::getCoinTree () {
     return this->(*players_by_coins);
 };
+

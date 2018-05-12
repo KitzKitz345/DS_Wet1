@@ -3,6 +3,7 @@
 //
 
 #include <cstdlib>
+#include <new>
 #include "CoinTree.h"
 #include "PlayerTree.h"
 
@@ -21,6 +22,9 @@ void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *
     Player** player_arr = new Player*[n];
     coin_tree->inorder(player_arr);
     *players = (int*)malloc(n*sizeof(int));
+    if(*players == nullptr){
+        throw std::bad_alloc();
+    }
     for (int i=0; i < n; i++){
         *((*players)+i) = (*(player_arr+i))->getPlayerId();
     }

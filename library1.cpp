@@ -2,6 +2,7 @@
 // Created by Nitzan on 12/05/2018.
 //
 
+#include <new>
 #include "library1.h"
 #include "Oasis.h"
 #include "CoinTree.h"
@@ -21,6 +22,20 @@ StatusType addPlayer(void *DS, int playerID, int initialCoins) {
         return FAILURE;
     } catch (std::exception& e) {
         return ALLOCATION_ERROR;
+    }
+    return SUCCESS;
+}
+
+StatusType addClan(void *DS, int clanID){
+    if (DS == nullptr || clanID <= 0){
+        return INVALID_INPUT;
+    }
+    try{
+        ((Oasis*)DS)->addClan(clanID);
+    } catch (std::bad_alloc& e){
+        return ALLOCATION_ERROR;
+    } catch (Tree::AlreadyExist& e){
+        return FAILURE;
     }
     return SUCCESS;
 }
