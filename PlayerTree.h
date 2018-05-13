@@ -6,12 +6,13 @@
 #define CODE_PLAYERTREE_H
 
 #include "Tree.h"
+#include "ClanTree.h"
 
 class Player {
     int player_id;
     int coins;
     int challenges;
-    int clan_id;
+    Clan* player_clan;
 
 public:
     explicit Player(int id, int coins, int challenges, int clan_id);
@@ -20,8 +21,8 @@ public:
     int getPlayerId();
     int getCoins();
     int getChallenges();
-    int getClanId();
-    void setClanId(int new_id);
+    Clan& getClan();
+    void setClan(Clan& new_clan);
     void addCoins(int coins);
     void incChallenges();
 };

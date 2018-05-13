@@ -19,12 +19,12 @@ int Player::getChallenges() {
     return this->challenges;
 }
 
-int Player::getClanId() {
-    return this->clan_id;
+Clan& Player::getClan() {
+    return *(this->player_clan);
 }
 
-void Player::setClanId(int new_id) {
-    this->clan_id = new_id;
+void Player::setClan(Clan& new_clan) {
+    this->player_clan = &new_clan;
 }
 
 void Player::addCoins(int coins) {
