@@ -16,7 +16,7 @@ class Oasis {
     Player* best_player;
 
 public:
-    explicit Oasis(); //need to finish constructor
+    explicit Oasis();
     ~Oasis(); // need to finish destructor
     Oasis(const Oasis& oasis) = delete;
     void addClan(int clanID);

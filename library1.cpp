@@ -113,3 +113,12 @@ StatusType uniteClans(void *DS, int clanID1, int clanID2)
     }
     return SUCCESS;
 }
+
+void* init() {
+    try {
+        Oasis* oasis = new Oasis();
+        return ((void*)oasis);
+    } catch (std::bad_alloc& e) {
+        return nullptr;
+    }
+}

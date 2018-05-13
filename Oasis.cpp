@@ -3,9 +3,15 @@
 //
 
 #include "Oasis.h"
+#include "Tree.h"
 
 explicit Oasis::Oasis() : best_player(nullptr) {
-
+    Tree<Player,int>* players = new Tree();
+    this->players = players;
+    Tree<Player,Pair>* players_by_coins = new Tree();
+    this->players_by_coins = players_by_coins;
+    Tree<Clan,int>* clans = new Tree();
+    this->clans = clans;
 }
 
 void Oasis::insertPlayer(Player& player) {
