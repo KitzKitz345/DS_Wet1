@@ -23,8 +23,8 @@ Clan* Player::getClan() {
     return this->player_clan;
 }
 
-void Player::setClan(Clan& new_clan) {
-    this->player_clan = &new_clan;
+void Player::setClan(Clan* new_clan) {
+    this->player_clan = new_clan;
 }
 
 void Player::addCoins(int coins) {

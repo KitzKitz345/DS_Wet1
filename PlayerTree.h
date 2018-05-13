@@ -22,7 +22,7 @@ public:
     int getCoins();
     int getChallenges();
     Clan* getClan();
-    void setClan(Clan& new_clan);
+    void setClan(Clan* new_clan);
     void addCoins(int coins);
     void incChallenges();
 };

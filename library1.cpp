@@ -15,7 +15,7 @@ StatusType addPlayer(void *DS, int playerID, int initialCoins) {
     }
     //need to check if players tree is null?
     try {
-        Player* new_player = new Player(playerID,initialCoins,0,-1);
+        Player* new_player = new Player(playerID,initialCoins,0);
         ((Oasis*)DS)->insertPlayer(*new_player);
     } catch (Tree::AlreadyExist& e){
         return FAILURE;

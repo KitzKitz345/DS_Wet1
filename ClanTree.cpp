@@ -28,7 +28,7 @@ void Clan::getPlayers(Player** player_arr){
 }
 
 void Clan::joinClan(Player &new_player) {
-    if (new_player.getClanId() == -1){
+    if (new_player.getClan() == nullptr){
         throw ClanTree::AlreadyInClan();
     }
     if (this->best_player == nullptr){
@@ -41,7 +41,7 @@ void Clan::joinClan(Player &new_player) {
         }
     }
     int* id_key = new int(new_player.getPlayerId());
-    new_player.setClanId(this->clan_id);
+    new_player.setClan(*this);
     PlayerTree::insertPlayer(this->players, new_player);
     CoinTree::insertPlayerByCoin(this->players_by_coins, new_player);
 }
@@ -100,7 +100,7 @@ void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
     Player** player_arr = new Player*[n];
     from->getPlayers(player_arr);
     for(int i = 0; i < n; i++){
-        (*(player_arr+i))->setClanId(-1);
+        (*(player_arr+i))->setClan(nullptr);
         if ((*(player_arr+i))->getChallenges() != 0){
             to->joinClan(**(player_arr+i));
         }

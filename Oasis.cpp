@@ -46,7 +46,7 @@ void Oasis::completeChallenge(int playerId, int coins) {
     Player* advanced_player = &(this->players->find(playerId).getData());
     Clan* clan_of_player = advanced_player->getClan();
     if (clan_of_player != nullptr){
-        clan->completedChallenge(*advanced_player);
+        clan_of_player->completedChallenge(*advanced_player);
     }
 }
 
