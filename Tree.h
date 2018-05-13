@@ -226,11 +226,8 @@ class Tree {
 public:
     Tree(): data(nullptr), key(nullptr), father(nullptr), lson(nullptr), rson(nullptr){}
 
-    Tree(Key& key, Data& data): data(&data), key(&key), father(nullptr), lson(nullptr),
-                                rson(nullptr){
-        h_left = 0;
-        h_right = 0;
-        size = 0;
+    Tree(Key& key, Data& data): key(&key), data(&data), father(nullptr), lson(nullptr),
+                                rson(nullptr), h_left(0), h_right(0), size(0){
     }
 
     ~Tree(){
@@ -327,7 +324,7 @@ public:
             throw DoesNotExist();
         }
         Tree* parent = T->father;
-        bool is_left_son = *(parent->lson->key) == key;
+        //bool is_left_son = *(parent->lson->key) == key;
         if (T->size == 1) {
             T->remove_leaf();
         } else if (T->lson == nullptr || T->rson == nullptr){ //T has only one son
