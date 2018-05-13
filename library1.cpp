@@ -17,7 +17,11 @@ StatusType addPlayer(void *DS, int playerID, int initialCoins) {
     try {
         Player* new_player = new Player(playerID,initialCoins,0);
         ((Oasis*)DS)->insertPlayer(*new_player);
-    } catch (Tree<Pair, Player>::AlreadyExist& e){
+    } catch (Tree<Player, int>::AlreadyExist& e){
+        return FAILURE;
+    } catch (Tree<Player, Pair>::AlreadyExist& e){
+        return FAILURE;
+    } catch (Tree<Clan, int>::AlreadyExist& e){
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
@@ -35,7 +39,13 @@ StatusType addClan(void *DS, int clanID){
         ((Oasis*)DS)->addClan(clanID);
     } catch (std::bad_alloc& e){
         return ALLOCATION_ERROR;
-    } catch (Tree::AlreadyExist& e){
+    } catch (Tree<Player, int>::AlreadyExist& e){
+        return FAILURE;
+    } catch (Tree<Player, Pair>::AlreadyExist& e){
+        return FAILURE;
+    } catch (Tree<Clan, int>::AlreadyExist& e){
+        return FAILURE;
+    } catch (std::exception& e) {
         return FAILURE;
     }
     return SUCCESS;
@@ -49,9 +59,15 @@ StatusType joinClan(void *DS, int playerID, int clanID){
         ((Oasis*)DS)->joinClan(playerID, clanID);
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
-    } catch (Tree::AlreadyExist& e){
+    } catch (Tree<Player, int>::AlreadyExist& e){
         return FAILURE;
-    } catch (ClanTree::AlreadyInClan& e){
+    } catch (Tree<Player, Pair>::AlreadyExist& e){
+        return FAILURE;
+    } catch (Tree<Clan, int>::AlreadyExist& e){
+        return FAILURE;
+    }  catch (ClanTree::AlreadyInClan& e){
+        return FAILURE;
+    } catch (std::exception& e) {
         return FAILURE;
     }
     return SUCCESS;
@@ -63,7 +79,11 @@ StatusType completeChallange(void *DS, int playerID, int coins) {
     }
     try {
         ((Oasis*)DS)->completeChallenge(playerID, coins);
-    } catch (Tree::DoesNotExist& e) {
+    } catch (Tree<Player, int>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Player, Pair>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Clan, int>::DoesNotExist& e) {
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
@@ -79,7 +99,13 @@ StatusType getBestPlayer(void *DS, int clanID, int *playerID){
     }
     try{
         ((Oasis*)DS)->getBestPlayer(clanID, playerID);
-    } catch (Tree::DoesNotExist& e){
+    } catch (Tree<Player, int>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Player, Pair>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Clan, int>::DoesNotExist& e) {
+        return FAILURE;
+    } catch (std::exception& e) {
         return FAILURE;
     }
     return SUCCESS;
@@ -91,10 +117,16 @@ StatusType getScoreboard(void *DS, int clanID, int **players, int *numOfPlayers)
     }
     try {
         ((Oasis*)DS)->getScoreboard(clanID, players, numOfPlayers);
-    } catch (Tree::DoesNotExist& e) {
+    } catch (Tree<Player, int>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Player, Pair>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Clan, int>::DoesNotExist& e) {
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
+    } catch (std::exception& e) {
+        return FAILURE;
     }
     return SUCCESS;
 }
@@ -106,10 +138,16 @@ StatusType uniteClans(void *DS, int clanID1, int clanID2)
     }
     try {
         ((Oasis*)DS)->uniteClans(clanID1, clanID2);
-    } catch (Tree::DoesNotExist& e) {
+    } catch (Tree<Player, int>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Player, Pair>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Clan, int>::DoesNotExist& e) {
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
+    } catch (std::exception& e) {
+        return FAILURE;
     }
     return SUCCESS;
 }
