@@ -224,11 +224,11 @@ class Tree {
     }
 
 public:
-    Tree(): data(nullptr), key(nullptr), father(nullptr), lson(nullptr), rson(nullptr){}
+    Tree(): key(nullptr), data(nullptr) , father(nullptr), lson(nullptr), rson(nullptr), h_left(0),
+            h_right(0), size(0){}
 
     Tree(Key& key, Data& data): key(&key), data(&data), father(nullptr), lson(nullptr),
-                                rson(nullptr), h_left(0), h_right(0), size(0){
-    }
+                                rson(nullptr), h_left(0), h_right(0), size(0){}
 
     ~Tree(){
         delete lson;
