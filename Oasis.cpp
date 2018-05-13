@@ -43,14 +43,20 @@ void Oasis::completeChallenge(int playerId, int coins) {
     Player& advanced_player = this->players->find(playerId).getData();
     int original_coins = advanced_player.getCoins();
     CoinTree::removePlayer(this->players_by_coins, playerId, original_coins);
-    advanced_player.getClan()->removePlayerFromClan(advanced_player);
+    advanced_player.getClan()->removePlayerFromClanCoins(advanced_player);
     PlayerTree::completeChallenge(this->players, playerId, coins);
-    Player& player = this->players->find(playerId).getData(); // should be declared like that?
-    CoinTree::insertPlayerByCoin(this->players_by_coins, player);
-    Player* advanced_player = &(this->players->find(playerId).getData());
-    Clan* clan_of_player = advanced_player->getClan();
+    Pair* key = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
+    CoinTree::insertPlayerByCoin(this->players_by_coins, *key, advanced_player);
+    if (advanced_player.getCoins() > this->best_player->getCoins()){
+        this->best_player = &advanced_player;
+    } else if (advanced_player.getCoins() == this->best_player->getCoins() &&
+            playerId < this->best_player->getCoins()){
+        this->best_player = &advanced_player;
+    }
+    advanced_player.getClan()->insertPlayerToClanCoins(*key, advanced_player);
+    Clan* clan_of_player = advanced_player.getClan();
     if (clan_of_player != nullptr){
-        clan_of_player->completedChallenge(*advanced_player);
+        clan_of_player->completedChallenge(advanced_player);
     }
 }
 

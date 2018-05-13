@@ -73,7 +73,11 @@ void ClanTree::addClan(Tree<Clan, int>* clan_tree, int id){
     clan_tree->insert(id, *new_clan);
 }
 
-void Clan::removePlayerFromClan(Player& player){
+void Clan::insertPlayerToClanCoins(Pair& key, Player& player){
+    CoinTree::insertPlayerByCoin(this->players_by_coins, key, player);
+}
+
+void Clan::removePlayerFromClanCoins(Player& player){
     CoinTree::removePlayer(this->players_by_coins, player.getPlayerId(), player.getCoins());
 }
 

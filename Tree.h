@@ -235,6 +235,7 @@ public:
     ~Tree(){
         delete lson;
         delete rson;
+        delete key;
     }
 
     Tree(const Tree& tree) = delete;
