@@ -5,7 +5,7 @@
 #include "PlayerTree.h"
 
 explicit Player::Player(int id, int coins, int challenges, int clan_id) : player_id(id),
-                        coins(coins), challenges (challenges), clan_id(clan_id) {}
+                        coins(coins), challenges (challenges), player_clan(nullptr) {}
 
 int Player::getPlayerId() {
     return this->player_id;
