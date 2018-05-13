@@ -24,6 +24,7 @@ public:
     int getSize();
     void getPlayers(Player** player_arr);
     void joinClan(Player& new_player);
+    void removePlayerFromClan(Player& player);
     void getScoreBoard(int **players, int *numOfPlayers);
     void completedChallenge(Player& player);
 };

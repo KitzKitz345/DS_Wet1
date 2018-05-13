@@ -43,7 +43,7 @@ void Clan::joinClan(Player &new_player) {
     int* id_key = new int(new_player.getPlayerId());
     new_player.setClan(this);
     PlayerTree::insertPlayer(this->players, new_player);
-    CoinTree::insertPlayerByCoin(this->players_by_coins, new_player);
+    CoinTree::insertPlayerByCoin(this->players_by_coins, new_player. new_player);
 }
 
 void Clan::getScoreBoard(int **players, int *numOfPlayers){
@@ -71,6 +71,10 @@ void ClanTree::addClan(Tree<Clan, int>* clan_tree, int id){
     }
     Clan* new_clan = new Clan(id);
     clan_tree->insert(id, *new_clan);
+}
+
+void Clan::removePlayerFromClan(Player& player){
+    CoinTree::removePlayer(this->players_by_coins, player.getPlayerId(), player.getCoins());
 }
 
 void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){

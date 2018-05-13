@@ -32,12 +32,12 @@ void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *
     delete player_arr;
 }
 
-void CoinTree::insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Player& player) {
-    Pair* p = new Pair(player.getPlayerId(), player.getCoins()); // should do delete?
-    coin_tree->insert(*p, player);
+void CoinTree::insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Pair& key, Player& player) {
+    coin_tree->insert(key, player);
 }
 
 void CoinTree::removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coins) {
-    Pair* p = new Pair(playerId, coins); // should do delete?
+    Pair* p = new Pair(playerId, coins);
     coin_tree->remove(*p);
+    delete p;
 }

@@ -20,7 +20,8 @@ void Oasis::insertPlayer(Player& player) {
         this->best_player = &player;
     }
     PlayerTree::insertPlayer(this->players, player);
-    CoinTree::insertPlayerByCoin(this->players_by_coins, player);
+    Pair* key = new Pair(player.getPlayerId(), player.getCoins());
+    CoinTree::insertPlayerByCoin(this->players_by_coins, *key, player);
 }
 
 void Oasis::addClan(int clanID){
@@ -39,7 +40,10 @@ void Oasis::joinClan(int playerID, int clanID)
 
 //need to add another check if the edited player is the best in the entire system
 void Oasis::completeChallenge(int playerId, int coins) {
-    CoinTree::removePlayer(this->players_by_coins, playerId, coins);
+    Player& advanced_player = this->players->find(playerId).getData();
+    int original_coins = advanced_player.getCoins();
+    CoinTree::removePlayer(this->players_by_coins, playerId, original_coins);
+    advanced_player.getClan()->removePlayerFromClan(advanced_player);
     PlayerTree::completeChallenge(this->players, playerId, coins);
     Player& player = this->players->find(playerId).getData(); // should be declared like that?
     CoinTree::insertPlayerByCoin(this->players_by_coins, player);
