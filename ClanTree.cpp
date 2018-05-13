@@ -21,8 +21,8 @@ int Clan::getClanId() {
     return this->clan_id;
 }
 
-int Clan::getBestPlayer() {
-    return this->best_player->getPlayerId();
+Player* Clan::getBestPlayer() {
+    return this->best_player;
 }
 
 int Clan::getSize(){

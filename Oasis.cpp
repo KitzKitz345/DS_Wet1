@@ -6,11 +6,11 @@
 #include "Tree.h"
 
 Oasis::Oasis() : best_player(nullptr) {
-    Tree<Player,int>* players = new Tree();
+    Tree<Player,int>* players = new Tree<Player,int>();
     this->players = players;
-    Tree<Player,Pair>* players_by_coins = new Tree();
+    Tree<Player,Pair>* players_by_coins = new Tree<Player,Pair>();
     this->players_by_coins = players_by_coins;
-    Tree<Clan,int>* clans = new Tree();
+    Tree<Clan,int>* clans = new Tree<Clan,int>();
     this->clans = clans;
 }
 
@@ -40,7 +40,7 @@ void Oasis::joinClan(int playerID, int clanID)
     Clan* clan = &(this->clans->find(clanID).getData());
     Player* player = &(this->players->find(playerID).getData());
     if (clan->getClanId() != clanID || player->getPlayerId() != playerID){
-        throw Tree::DoesNotExist();
+        throw Tree<Clan, int>::DoesNotExist();
     }
     clan->joinClan(*player);
 }
@@ -77,12 +77,12 @@ void Oasis::getBestPlayer(int clanID, int *playerID){
     } else {
         Clan* clan = &(this->clans->find(clanID).getData());
         if (clan->getClanId() != clanID){
-            throw Tree::DoesNotExist();
+            throw Tree<Clan, int>::DoesNotExist();
         }
         if (clan->getBestPlayer() == nullptr){
             *playerID = -1;
         } else {
-            *playerID = clan->getBestPlayer();
+            *playerID = clan->getBestPlayer()->getPlayerId();
         }
     }
 }
@@ -98,7 +98,7 @@ void Oasis::getScoreboard(int clanID, int **players, int *numOfPlayers){
     } else {
         Clan *clan = &(this->clans->find(clanID).getData());
         if (clan->getClanId() != clanID) {
-            throw Tree::DoesNotExist();
+            throw Tree<Clan, int>::DoesNotExist();
         }
         if (clan->getBestPlayer() == nullptr) {
             players = nullptr;

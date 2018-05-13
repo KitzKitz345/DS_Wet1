@@ -20,7 +20,7 @@ public:
     ~Clan();
     Clan(const Clan& clan) = delete;
     int getClanId();
-    int getBestPlayer();
+    Player* getBestPlayer();
     int getSize();
     void getPlayers(Player** player_arr);
     void joinClan(Player& new_player);
