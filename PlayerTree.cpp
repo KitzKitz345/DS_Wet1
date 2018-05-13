@@ -4,7 +4,7 @@
 
 #include "PlayerTree.h"
 
-explicit Player::Player(int id, int coins, int challenges) : player_id(id),
+Player::Player(int id, int coins, int challenges) : player_id(id),
                         coins(coins), challenges(challenges), player_clan(nullptr) {}
 
 int Player::getPlayerId() {
@@ -37,7 +37,7 @@ void Player::incChallenges() {
 
 void PlayerTree::insertPlayer(Tree<Player, int>* player_tree, Player& player) {
     int player_id = player.getPlayerId();
-    player_tree->insert(player_id,player);
+    player_tree->insert(player_id, player);
 }
 
 void PlayerTree::completeChallenge(Tree<Player, int>* player_tree, int playerId, int coins) {

@@ -5,8 +5,8 @@
 #ifndef CODE_CLANTREE_H
 #define CODE_CLANTREE_H
 
-#include "PlayerTree.h"
 #include "Tree.h"
+#include "PlayerTree.h"
 #include "CoinTree.h"
 
 class Clan {
@@ -17,7 +17,7 @@ class Clan {
 
 public:
     explicit Clan(int id);
-    ~Clan() = default;
+    ~Clan();
     Clan(const Clan& clan) = delete;
     int getClanId();
     int getBestPlayer();

@@ -4,7 +4,7 @@
 
 #ifndef CODE_COINTREE_H
 #define CODE_COINTREE_H
-
+class Player;
 #include "PlayerTree.h"
 
 class Pair {

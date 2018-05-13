@@ -6,9 +6,14 @@
 #include "ClanTree.h"
 #include "CoinTree.h"
 
-explicit Clan::Clan(int id): clan_id(id), players(nullptr), players_by_coins(nullptr),
+Clan::Clan(int id): clan_id(id), players(nullptr), players_by_coins(nullptr),
                              best_player(nullptr){
 
+}
+
+Clan::~Clan(){
+    delete players;
+    delete players_by_coins;
 }
 
 int Clan::getClanId() {
@@ -41,9 +46,10 @@ void Clan::joinClan(Player &new_player) {
         }
     }
     int* id_key = new int(new_player.getPlayerId());
+    Pair* pair_key = new Pair(new_player.getPlayerId(), new_player.getCoins());
     new_player.setClan(this);
     PlayerTree::insertPlayer(this->players, new_player);
-    CoinTree::insertPlayerByCoin(this->players_by_coins, new_player. new_player);
+    CoinTree::insertPlayerByCoin(this->players_by_coins, *pair_key, new_player);
 }
 
 void Clan::getScoreBoard(int **players, int *numOfPlayers){

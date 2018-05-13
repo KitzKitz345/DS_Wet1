@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(code)
 
-set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_STANDARD 11)
 
 add_executable(code main1.cpp library1.h PlayerTree.cpp PlayerTree.h ClanTree.cpp ClanTree.h Tree.h CoinTree.cpp
         CoinTree.h Oasis.h Oasis.cpp library1.cpp)
