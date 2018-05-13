@@ -17,7 +17,7 @@ StatusType addPlayer(void *DS, int playerID, int initialCoins) {
     try {
         Player* new_player = new Player(playerID,initialCoins,0);
         ((Oasis*)DS)->insertPlayer(*new_player);
-    } catch (Tree::AlreadyExist& e){
+    } catch (Tree<Pair, Player>::AlreadyExist& e){
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;

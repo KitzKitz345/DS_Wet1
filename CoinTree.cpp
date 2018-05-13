@@ -7,13 +7,17 @@
 #include "CoinTree.h"
 #include "PlayerTree.h"
 
-explicit Pair::Pair(int id, int coin) : id(id), coin(coin){}
+Pair::Pair(int id, int coin) : id(id), coin(coin){}
 
-bool operator==(const Pair& p) const{
+bool Pair::operator==(const Pair& p) const{
     return (this->id == p.id) && (this->coin == p.coin);
 }
 
-bool operator>(const Pair& p) const {
+bool Pair::operator!=(const Pair& p) const{
+    return !(this->operator==(p));
+}
+
+bool Pair::operator>(const Pair& p) const {
     return (this->coin > p.coin) || ((this->coin == p.coin) && (this->id < p.id));
 }
 

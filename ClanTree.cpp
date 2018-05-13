@@ -74,7 +74,7 @@ void Clan::completedChallenge(Player& player){
 
 void ClanTree::addClan(Tree<Clan, int>* clan_tree, int id){
     if (clan_tree->find(id).getData().getClanId() == id){
-        throw Tree::AlreadyExist();
+        throw Tree<Clan, int>::AlreadyExist();
     }
     Clan* new_clan = new Clan(id);
     clan_tree->insert(id, *new_clan);
@@ -92,7 +92,7 @@ void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
     Clan* clan1 = &(clan_tree->find(id1).getData());
     Clan* clan2 = &(clan_tree->find(id2).getData());
     if (clan1->getClanId() != id1 || clan2->getClanId() != id2){
-        throw Tree::DoesNotExist();
+        throw Tree<Clan, int>::DoesNotExist();
     }
     Clan* to = nullptr;
     Clan* from = nullptr;

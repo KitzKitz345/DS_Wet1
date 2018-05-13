@@ -220,7 +220,7 @@ class Tree {
             next_node = next_node->lson;
         }
         this->switch_nodes(*next_node);
-        remove(this->key);
+        remove(*(this->key));
     }
 
 public:
@@ -323,11 +323,11 @@ public:
 
     void remove(Key& key){
         Tree* T = &this->find(key);
-        if (T->key != key){
+        if (*(T->key) != key){
             throw DoesNotExist();
         }
         Tree* parent = T->father;
-        bool is_left_son = parent->lson->key == key;
+        bool is_left_son = *(parent->lson->key) == key;
         if (T->size == 1) {
             T->remove_leaf();
         } else if (T->lson == nullptr || T->rson == nullptr){ //T has only one son

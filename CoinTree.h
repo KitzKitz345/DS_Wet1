@@ -15,6 +15,7 @@ public:
     ~Pair() = default;
     Pair(const Pair& p) = delete;
     bool operator==(const Pair& p) const;
+    bool operator!=(const Pair& p) const;
     bool operator>(const Pair& p) const;
 /*  bool operator<(const Pair& p) const;       is needed??*/
 
