@@ -15,7 +15,7 @@ class Player {
     Clan* player_clan;
 
 public:
-    explicit Player(int id, int coins, int challenges, int clan_id);
+    explicit Player(int id, int coins, int challenges);
     ~Player() = default;
     Player(const Player& player) = delete;
     int getPlayerId();
