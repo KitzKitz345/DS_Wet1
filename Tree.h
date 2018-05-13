@@ -96,9 +96,9 @@ class Tree {
                 this->LR_Roll();
             }
         } else if (BF == -2){
-            if(lson_BF <= 0){
+            if(rson_BF <= 0){
                 this->RR_Roll();
-            } else if (lson_BF == 1){
+            } else if (rson_BF == 1){
                 this->RL_Roll();
             }
         }
