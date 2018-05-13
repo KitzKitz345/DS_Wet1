@@ -44,10 +44,8 @@ void Oasis::completeChallenge(int playerId, int coins) {
     Player& player = this->players->find(playerId).getData(); // should be declared like that?
     CoinTree::insertPlayerByCoin(this->players_by_coins, player);
     Player* advanced_player = &(this->players->find(playerId).getData());
-    int clan_of_player = advanced_player->getClanId();
-    if (clan_of_player != -1){
-        Clan* clan = &(this->clans->find(clan_of_player).getData()); // not good! logk, talk to
-                // tsvitzikle
+    Clan* clan_of_player = advanced_player->getClan();
+    if (clan_of_player != nullptr){
         clan->completedChallenge(*advanced_player);
     }
 }

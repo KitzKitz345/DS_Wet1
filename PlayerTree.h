@@ -21,7 +21,7 @@ public:
     int getPlayerId();
     int getCoins();
     int getChallenges();
-    Clan& getClan();
+    Clan* getClan();
     void setClan(Clan& new_clan);
     void addCoins(int coins);
     void incChallenges();

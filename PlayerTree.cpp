@@ -19,8 +19,8 @@ int Player::getChallenges() {
     return this->challenges;
 }
 
-Clan& Player::getClan() {
-    return *(this->player_clan);
+Clan* Player::getClan() {
+    return this->player_clan;
 }
 
 void Player::setClan(Clan& new_clan) {
