@@ -41,7 +41,7 @@ void Clan::joinClan(Player &new_player) {
         }
     }
     int* id_key = new int(new_player.getPlayerId());
-    new_player.setClan(*this);
+    new_player.setClan(this);
     PlayerTree::insertPlayer(this->players, new_player);
     CoinTree::insertPlayerByCoin(this->players_by_coins, new_player);
 }
