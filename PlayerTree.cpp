@@ -46,3 +46,8 @@ void PlayerTree::completeChallenge(Tree<Player, int>* player_tree, int playerId,
     player.addCoins(coins);
     player.incChallenges();
 }
+
+void PlayerTree::deleteTree(Tree<Player,int>* player_tree) {
+    player_tree->deleteTree();
+    delete player_tree;
+}

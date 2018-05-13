@@ -41,3 +41,8 @@ void CoinTree::removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coi
     coin_tree->remove(*p);
     delete p;
 }
+
+void CoinTree::deleteTree(Tree<Player, Pair>* coin_tree) {
+    coin_tree->deleteTree();
+    delete coin_tree;
+}

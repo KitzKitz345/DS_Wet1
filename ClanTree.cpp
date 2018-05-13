@@ -119,5 +119,10 @@ void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
     delete from;
 }
 
+void ClanTree::deleteTree(Tree<Clan, int>* clan_tree) {
+    clan_tree->deleteTree();
+    delete clan_tree;
+}
+
 
 

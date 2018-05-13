@@ -39,6 +39,7 @@ namespace ClanTree{
 
     void addClan(Tree<Clan, int>* clan_tree, int id);
     void uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2);
+    void deleteTree(Tree<Clan, int>* clan_tree);
 }
 
 

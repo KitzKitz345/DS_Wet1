@@ -122,3 +122,11 @@ void* init() {
         return nullptr;
     }
 }
+
+void quit(void** DS) {
+    if (DS == nullptr) {
+        return;
+    }
+    delete ((Oasis*)DS);
+    DS = nullptr;
+}

@@ -30,6 +30,7 @@ public:
 namespace PlayerTree {
     void insertPlayer(Tree<Player, int>* player_tree, Player& player);
     void completeChallenge(Tree<Player, int>* player_tree, int playerId, int coins);
+    void deleteTree(Tree<Player,int>* player_tree);
 }
 
 

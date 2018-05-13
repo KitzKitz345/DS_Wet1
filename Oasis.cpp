@@ -14,6 +14,13 @@ explicit Oasis::Oasis() : best_player(nullptr) {
     this->clans = clans;
 }
 
+Oasis::~Oasis() {
+    ClanTree::deleteTree(this->clans);
+    PlayerTree::deleteTree(this->players);
+    CoinTree::deleteTree(this->players_by_coins);
+    PlayerTree::deleteTree(this->players);
+}
+
 void Oasis::insertPlayer(Player& player) {
     if (this->best_player == nullptr || (this->best_player->getChallenges() == 0 &&
         this->best_player->getPlayerId() > player.getPlayerId())){
