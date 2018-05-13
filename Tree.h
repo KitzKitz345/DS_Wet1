@@ -283,12 +283,12 @@ public:
             throw EmptyTree(); // need to catch this somewhere
         }
         if (this->lson != nullptr) {
-            this->lson->inorder(data++);
+            data = this->lson->inorder(data);
         }
-        data = this->data; // needs an operator overloading?
+        *data = this->data; // needs an operator overloading?
         data++;
         if (this->rson != nullptr) {
-            this->rson->inorder(data++);
+            data = this->rson->inorder(data);
         }
         return data;
     }
