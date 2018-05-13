@@ -6,7 +6,7 @@
 #define CODE_PLAYERTREE_H
 
 #include "Tree.h"
-#include "ClanTree.h"
+class Clan;
 
 class Player {
     int player_id;

@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include "ClanTree.h"
+#include "PlayerTree.h"
 #include "CoinTree.h"
 
 Clan::Clan(int id): clan_id(id), players(nullptr), players_by_coins(nullptr),

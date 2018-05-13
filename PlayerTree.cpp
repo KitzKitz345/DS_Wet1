@@ -3,6 +3,7 @@
 //
 
 #include "PlayerTree.h"
+#include "ClanTree.h"
 
 Player::Player(int id, int coins, int challenges) : player_id(id),
                         coins(coins), challenges(challenges), player_clan(nullptr) {}

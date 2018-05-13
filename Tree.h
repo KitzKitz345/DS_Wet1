@@ -226,7 +226,8 @@ class Tree {
 public:
     Tree(): data(nullptr), key(nullptr), father(nullptr), lson(nullptr), rson(nullptr){}
 
-    Tree(Key& key, Data& data): data(data), key(key), father(nullptr), lson(nullptr), rson(nullptr){
+    Tree(Key& key, Data& data): data(&data), key(&key), father(nullptr), lson(nullptr),
+                                rson(nullptr){
         h_left = 0;
         h_right = 0;
         size = 0;
@@ -256,11 +257,11 @@ public:
         if (this->data == nullptr) {
             throw EmptyTree(); // need to catch this somewhere
         }
-        if (this->key == key) {
+        if (*(this->key) == key) {
             return *this;
         }
         else {
-            if (this->key > key) {
+            if (*(this->key) > key) {
                 if (this->lson == nullptr) {
                     return *this;
                 } else {
@@ -295,15 +296,15 @@ public:
     void insert(Key& key, Data& data) {
         Tree* T = &this->find(key);
         if (T->data == nullptr){
-            T->key = key;
-            T->data = data;
+            T->key = &key;
+            T->data = &data;
             T->size = 1;
             return;
         }
-        if (T->key == key) {
+        if (*(T->key) == key) {
             throw AlreadyExist();
         }
-        if (T->key > key){
+        if (*(T->key) > key){
             T->lson = new Tree(key, data);
             T->lson->father = T;
             T = T->lson;

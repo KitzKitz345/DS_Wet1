@@ -6,8 +6,8 @@
 #define CODE_CLANTREE_H
 
 #include "Tree.h"
-#include "PlayerTree.h"
-#include "CoinTree.h"
+class Player;
+class Pair;
 
 class Clan {
     int clan_id;
