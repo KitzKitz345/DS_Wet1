@@ -24,6 +24,8 @@ StatusType addPlayer(void *DS, int playerID, int initialCoins) {
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
+    }  catch (Tree<Player, Pair>::EmptyTree& e) {
+        return FAILURE;
     } catch (std::exception& e) {
         return FAILURE;
     }
@@ -43,6 +45,8 @@ StatusType addClan(void *DS, int clanID){
     } catch (Tree<Player, Pair>::AlreadyExist& e){
         return FAILURE;
     } catch (Tree<Clan, int>::AlreadyExist& e){
+        return FAILURE;
+    }  catch (Tree<Player, Pair>::EmptyTree& e) {
         return FAILURE;
     } catch (std::exception& e) {
         return FAILURE;
@@ -66,6 +70,8 @@ StatusType joinClan(void *DS, int playerID, int clanID){
         return FAILURE;
     }  catch (ClanTree::AlreadyInClan& e){
         return FAILURE;
+    }  catch (Tree<Player, Pair>::EmptyTree& e) {
+        return FAILURE;
     } catch (std::exception& e) {
         return FAILURE;
     }
@@ -83,6 +89,8 @@ StatusType completeChallange(void *DS, int playerID, int coins) {
     }  catch (Tree<Player, Pair>::DoesNotExist& e) {
         return FAILURE;
     }  catch (Tree<Clan, int>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Player, Pair>::EmptyTree& e) {
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
@@ -103,6 +111,8 @@ StatusType getBestPlayer(void *DS, int clanID, int *playerID){
     }  catch (Tree<Player, Pair>::DoesNotExist& e) {
         return FAILURE;
     }  catch (Tree<Clan, int>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Player, Pair>::EmptyTree& e) {
         return FAILURE;
     } catch (std::exception& e) {
         return FAILURE;

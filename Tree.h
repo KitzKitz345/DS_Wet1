@@ -246,7 +246,7 @@ public:
 
     Tree& find(Key& key) {
         if (this->data == nullptr) {
-            throw EmptyTree(); // need to catch this somewhere
+            throw EmptyTree();
         }
         if (*(this->key) == key) {
             return *this;
@@ -271,7 +271,7 @@ public:
 
     Data** inorder (Data** data) {
         if (this->data == nullptr) {
-            throw EmptyTree(); // need to catch this somewhere
+            throw EmptyTree();
         }
         if (this->lson != nullptr) {
             data = this->lson->inorder(data);
