@@ -27,14 +27,14 @@ class Tree {
         }
     }
 
-/*    void LL_Roll () {
+    void LL_Roll () {
         int size_lson = this->lson->size;
         this->lson->size = this->size;
         this->size = size_lson;
 
         Tree* ptr_lson = this->lson;
 
-        if (this->father == nullptr) {
+        /*if (this->father == nullptr) {
             this->father = this->lson;
             this->lson->father = nullptr;
             Tree* ptr_lson_rson = this->lson->rson;
@@ -51,18 +51,7 @@ class Tree {
             }
             ptr_lson->father = this->father;
             this->father = ptr_lson;
-        }
-        this->update_heights();
-        this->father->update_heights();
-    }*/
-
-    void LL_Roll () {
-        int size_lson = this->lson->size;
-        this->lson->size = this->size;
-        this->size = size_lson;
-
-
-
+        }*/
         this->update_heights();
         this->father->update_heights();
     }
