@@ -31,7 +31,7 @@ void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *
         throw std::bad_alloc();
     }
     for (int i=0; i < n; i++){
-        *((*players)+i) = (*(player_arr+i))->getPlayerId();
+        *((*players)+(n-1-i)) = (*(player_arr+i))->getPlayerId();
     }
     delete player_arr;
 }
