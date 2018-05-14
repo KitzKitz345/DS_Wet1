@@ -48,8 +48,8 @@ void Clan::joinClan(Player &new_player) {
     }
     Pair* pair_key = new Pair(new_player.getPlayerId(), new_player.getCoins());
     new_player.setClan(this);
-    PlayerTree::insertPlayer(this->players, new_player);
-    CoinTree::insertPlayerByCoin(this->players_by_coins, *pair_key, new_player);
+    PlayerTree::insertPlayer(&(this->players), new_player);
+    CoinTree::insertPlayerByCoin(&(this->players_by_coins), *pair_key, new_player);
 }
 
 void Clan::getScoreBoard(int **players, int *numOfPlayers){
@@ -70,16 +70,16 @@ void Clan::completedChallenge(Player& player){
 }
 
 
-void ClanTree::addClan(Tree<Clan, int>* clan_tree, int id){
-    if (clan_tree->find(id).getData().getClanId() == id){
+void ClanTree::addClan(Tree<Clan, int>** clan_tree, int id){
+    if ((*clan_tree)->find(id).getData().getClanId() == id){
         throw Tree<Clan, int>::AlreadyExist();
     }
     Clan* new_clan = new Clan(id);
-    clan_tree->insert(id, *new_clan);
+    (*clan_tree) = (*clan_tree)->insert(id, *new_clan);
 }
 
 void Clan::insertPlayerToClanCoins(Pair& key, Player& player){
-    CoinTree::insertPlayerByCoin(this->players_by_coins, key, player);
+    CoinTree::insertPlayerByCoin(&(this->players_by_coins), key, player);
 }
 
 void Clan::removePlayerFromClanCoins(Player& player){

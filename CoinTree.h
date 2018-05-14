@@ -22,7 +22,7 @@ public:
 
 namespace CoinTree{
     void getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *numOfPlayers);
-    void insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Pair& key, Player& player);
+    void insertPlayerByCoin(Tree<Player, Pair>** coin_tree, Pair& key, Player& player);
     void removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coins);
     void deleteTree(Tree<Player, Pair>* coin_tree);
 }

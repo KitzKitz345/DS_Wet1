@@ -26,13 +26,13 @@ void Oasis::insertPlayer(Player& player) {
         this->best_player->getPlayerId() > player.getPlayerId())){
         this->best_player = &player;
     }
-    PlayerTree::insertPlayer(this->players, player);
+    PlayerTree::insertPlayer(&(this->players), player);
     Pair* key = new Pair(player.getPlayerId(), player.getCoins());
-    CoinTree::insertPlayerByCoin(this->players_by_coins, *key, player);
+    CoinTree::insertPlayerByCoin(&(this->players_by_coins), *key, player);
 }
 
 void Oasis::addClan(int clanID){
-    ClanTree::addClan(this->clans, clanID);
+    ClanTree::addClan(&(this->clans), clanID);
 }
 
 void Oasis::joinClan(int playerID, int clanID)
@@ -55,7 +55,7 @@ void Oasis::completeChallenge(int playerId, int coins) {
     advanced_player.getClan()->removePlayerFromClanCoins(advanced_player);
     PlayerTree::completeChallenge(this->players, playerId, coins);
     Pair* key = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
-    CoinTree::insertPlayerByCoin(this->players_by_coins, *key, advanced_player);
+    CoinTree::insertPlayerByCoin(&(this->players_by_coins), *key, advanced_player);
     if (advanced_player.getCoins() > this->best_player->getCoins()){
         this->best_player = &advanced_player;
     } else if (advanced_player.getCoins() == this->best_player->getCoins() &&

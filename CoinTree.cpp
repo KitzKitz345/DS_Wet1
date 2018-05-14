@@ -36,8 +36,8 @@ void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *
     delete player_arr;
 }
 
-void CoinTree::insertPlayerByCoin(Tree<Player, Pair>* coin_tree, Pair& key, Player& player) {
-    coin_tree->insert(key, player);
+void CoinTree::insertPlayerByCoin(Tree<Player, Pair>** coin_tree, Pair& key, Player& player) {
+    (*coin_tree) = (*coin_tree)->insert(key, player);
 }
 
 void CoinTree::removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coins) {

@@ -325,12 +325,12 @@ public:
         return data;
     }
 
-    void insert(Key& key, Data& data) {
+    Tree* insert(Key& key, Data& data) {
         if (this->data == nullptr){
             this->key = &key;
             this->data = &data;
             this->size = 1;
-            return;
+            return this;
         }
         Tree* T = &(this->find(key));
         if (*(T->key) == key) {
@@ -352,9 +352,14 @@ public:
             T_copy = T_copy->father;
         }
         T->balance();
+        Tree* root = this;
+        while(root->father != nullptr){
+            root = root->father;
+        }
+        return root;
     }
 
-    void remove(Key& key){
+    Tree* remove(Key& key){
         Tree* T = &this->find(key);
         if (*(T->key) != key){
             throw DoesNotExist();
@@ -369,7 +374,12 @@ public:
             T->remove_two_sons(key);
         }
         parent->balance();
+        Tree* root = this;
+        while(root->father != nullptr){
+            root = root->father;
+        }
         delete T;
+        return root;
     }
 
     void deleteTree () {

@@ -48,9 +48,9 @@ void checkBadInputs(void* oasis, int the_challenger, int size, int* score_board)
 }
 
 void checkAddPlayer(void* oasis,int the_challenger,int size,int* score_board){
-    for(int i=0;i<50;i++){
+    for(int i=0;i<19;i++){
         if(!i)
-            assert(addPlayer(oasis,51,i)==SUCCESS);
+            assert(addPlayer(oasis,20,i)==SUCCESS);
         else
             assert(addPlayer(oasis,i,i)==SUCCESS);
     }
