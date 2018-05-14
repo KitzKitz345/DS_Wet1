@@ -234,33 +234,34 @@ class Tree {
         }else{
             temp_tree->rson = &to_switch;
         }
-        if (to_switch.father->lson->key == to_switch.key){
-            to_switch.father->lson = this;
+
+        if (to_switch.father->key == this->key){
+            to_switch.rson = this;
+            this->father = &to_switch;
         } else {
-            to_switch.father->rson = this;
+            if (to_switch.father->lson->key == to_switch.key){
+                to_switch.father->lson = this;
+            } else {
+                to_switch.father->rson = this;
+            }
+            this->father = to_switch.father;
+            to_switch.rson = this->rson;
         }
-        this->father = to_switch.father;
+
         to_switch.father = temp_tree;
+        this->rson = nullptr;
 
-        temp_tree = this->lson;
-        this->lson = to_switch.lson;
-        to_switch.lson = temp_tree;
+        to_switch.lson = this->lson;
+        this->lson = nullptr;
 
-        temp_tree = this->rson;
-        this->rson = to_switch.rson;
-        to_switch.rson = temp_tree;
+        to_switch.h_left = this->h_left;
+        this->h_left = 0;
 
-        int temp_int = this->h_left;
-        this->h_left = to_switch.h_left;
-        to_switch.h_left = temp_int;
+        to_switch.h_right = this->h_right;
+        this->h_right = 0;
 
-        temp_int = this->h_right;
-        this->h_right = to_switch.h_right;
-        to_switch.h_right = temp_int;
-
-        temp_int = this->size;
-        this->size = to_switch.size;
-        to_switch.size = temp_int;
+        to_switch.size = this->size;
+        this->size = 1;
     }
 
     void remove_two_sons(Key& key){
