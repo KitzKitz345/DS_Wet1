@@ -281,6 +281,10 @@ public:
         return *(this->data);
     }
 
+    Key& getRootKey(){
+        return *(this->key);
+    }
+
     class AlreadyExist : public std::exception {};
     class DoesNotExist : public std::exception {};
     class EmptyTree : public std::exception {};
@@ -360,7 +364,14 @@ public:
     }
 
     Tree* remove(Key& key){
-        Tree* T = &this->find(key);
+        Tree* T = &(this->find(key));
+        if (this->lson == nullptr && this->rson == nullptr){
+            return nullptr;
+        } else if (this->lson != nullptr && this->rson == nullptr){
+            return lson;
+        } else if (this->rson != nullptr && this->lson == nullptr){
+            return rson;
+        }
         if (*(T->key) != key){
             throw DoesNotExist();
         }
@@ -378,7 +389,9 @@ public:
         while(root->father != nullptr){
             root = root->father;
         }
-        delete T;
+        if (*(this->key) != key){
+            delete T;
+        }
         return root;
     }
 
