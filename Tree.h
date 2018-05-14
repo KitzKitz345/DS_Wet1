@@ -30,10 +30,24 @@ class Tree {
     void LL_Roll () {
         Tree* ptr_lson = this->lson;
 
-        this->lson = ptr_lson->rson;
-        ptr_lson->rson = this;
-        ptr_lson->father = this->father;
-        this->father = ptr_lson;
+        if (this->father == nullptr) {
+            this->lson = ptr_lson->rson;
+            ptr_lson->rson = this;
+            ptr_lson->father = nullptr;
+            this->father = ptr_lson;
+        }
+        else {
+            this->lson = ptr_lson->rson;
+            ptr_lson->rson = this;
+            ptr_lson->father = this->father;
+            if (this->father->rson == this) {
+                this->father->rson = ptr_lson;
+            }
+            if (this->father->lson == this) {
+                this->father->lson = ptr_lson;
+            }
+            this->father = ptr_lson;
+        }
 
         this->update_heights();
         this->father->update_heights();
@@ -60,10 +74,24 @@ class Tree {
     void RR_Roll () {
         Tree* ptr_rson = this->rson;
 
-        this->rson = ptr_rson->lson;
-        ptr_rson->lson = this;
-        ptr_rson->father = this->father;
-        this->father = ptr_rson;
+        if (this->father == nullptr) {
+            this->rson = ptr_rson->lson;
+            ptr_rson->lson = this;
+            ptr_rson->father = nullptr;
+            this->father = ptr_rson;
+        }
+        else {
+            this->rson = ptr_rson->lson;
+            ptr_rson->lson = this;
+            ptr_rson->father = this->father;
+            if (this->father->lson == this) {
+                this->father->lson = ptr_rson;
+            }
+            if (this->father->rson == this) {
+                this->father->rson = ptr_rson;
+            }
+            this->father = ptr_rson;
+        }
 
         this->update_heights();
         this->father->update_heights();
@@ -120,9 +148,13 @@ class Tree {
         Tree* T = this;
         if (T->lson != nullptr){
             T->h_left = 1+ max(T->lson->h_left, T->lson->h_right);
+        } else {
+            T->h_left = 0;
         }
         if (T->rson != nullptr){
             T->h_right = 1 + max(T->rson->h_left, T->rson->h_right);
+        } else {
+            T->h_right = 0;
         }
     }
 
