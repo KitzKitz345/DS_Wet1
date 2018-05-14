@@ -213,10 +213,12 @@ class Tree {
         if (is_left_son){
             //delete parent->lson;
             parent->lson = only_son;
+            only_son->father = parent;
             parent->h_left--;
         } else {
             //delete parent->rson;
             parent->rson = only_son;
+            only_son->father = parent;
             parent->h_right--;
         }
         while (parent != nullptr){
