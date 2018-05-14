@@ -165,9 +165,9 @@ void* init() {
 }
 
 void quit(void** DS) {
-    if (DS == nullptr) {
+    if (DS == nullptr || *DS == nullptr) {
         return;
     }
     delete ((Oasis*)DS);
-    DS = nullptr;
+    *DS = nullptr;
 }

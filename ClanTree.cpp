@@ -54,7 +54,7 @@ void Clan::joinClan(Player &new_player) {
 
 void Clan::getScoreBoard(int **players, int *numOfPlayers){
     if (this->players == nullptr){
-        players = nullptr;
+        *players = nullptr;
         *numOfPlayers = 0;
         return;
     }

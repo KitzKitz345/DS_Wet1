@@ -104,7 +104,7 @@ void Oasis::getScoreboard(int clanID, int **players, int *numOfPlayers){
             throw Tree<Clan, int>::DoesNotExist();
         }
         if (clan->getBestPlayer() == nullptr) {
-            players = nullptr;
+            *players = nullptr;
             *numOfPlayers = 0;
         } else {
             clan->getScoreBoard(players, numOfPlayers);
