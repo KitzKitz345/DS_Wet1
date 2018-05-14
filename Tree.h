@@ -31,12 +31,18 @@ class Tree {
         Tree* ptr_lson = this->lson;
 
         if (this->father == nullptr) {
+            if (this->lson->rson != nullptr) {
+                this->lson->rson->father = this;
+            }
             this->lson = ptr_lson->rson;
             ptr_lson->rson = this;
             ptr_lson->father = nullptr;
             this->father = ptr_lson;
         }
         else {
+            if (this->lson->rson != nullptr) {
+                this->lson->rson->father = this;
+            }
             this->lson = ptr_lson->rson;
             ptr_lson->rson = this;
             ptr_lson->father = this->father;
@@ -75,12 +81,18 @@ class Tree {
         Tree* ptr_rson = this->rson;
 
         if (this->father == nullptr) {
+            if (this->rson->lson != nullptr) {
+                this->rson->lson->father = this;
+            }
             this->rson = ptr_rson->lson;
             ptr_rson->lson = this;
             ptr_rson->father = nullptr;
             this->father = ptr_rson;
         }
         else {
+            if (this->rson->lson != nullptr) {
+                this->rson->lson->father = this;
+            }
             this->rson = ptr_rson->lson;
             ptr_rson->lson = this;
             ptr_rson->father = this->father;
