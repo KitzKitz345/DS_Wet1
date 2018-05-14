@@ -48,6 +48,9 @@ void Oasis::joinClan(int playerID, int clanID)
 //need to add another check if the edited player is the best in the entire system
 void Oasis::completeChallenge(int playerId, int coins) {
     Player& advanced_player = this->players->find(playerId).getData();
+    if (advanced_player.getPlayerId() != playerId){
+        throw Tree<Player, int>::DoesNotExist();
+    }
     int original_coins = advanced_player.getCoins();
     CoinTree::removePlayer(this->players_by_coins, playerId, original_coins);
     advanced_player.getClan()->removePlayerFromClanCoins(advanced_player);
@@ -60,7 +63,8 @@ void Oasis::completeChallenge(int playerId, int coins) {
             playerId < this->best_player->getCoins()){
         this->best_player = &advanced_player;
     }
-    advanced_player.getClan()->insertPlayerToClanCoins(*key, advanced_player);
+    Pair* key_for_clan = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
+    advanced_player.getClan()->insertPlayerToClanCoins(*key_for_clan, advanced_player);
     Clan* clan_of_player = advanced_player.getClan();
     if (clan_of_player != nullptr){
         clan_of_player->completedChallenge(advanced_player);

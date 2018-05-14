@@ -34,7 +34,7 @@ void Clan::getPlayers(Player** player_arr){
 }
 
 void Clan::joinClan(Player &new_player) {
-    if (new_player.getClan() == nullptr){
+    if (new_player.getClan() != nullptr){
         throw ClanTree::AlreadyInClan();
     }
     if (this->best_player == nullptr){
@@ -46,7 +46,6 @@ void Clan::joinClan(Player &new_player) {
             this->best_player = &new_player;
         }
     }
-    int* id_key = new int(new_player.getPlayerId());
     Pair* pair_key = new Pair(new_player.getPlayerId(), new_player.getCoins());
     new_player.setClan(this);
     PlayerTree::insertPlayer(this->players, new_player);

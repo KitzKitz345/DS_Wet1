@@ -37,8 +37,8 @@ void Player::incChallenges() {
 }
 
 void PlayerTree::insertPlayer(Tree<Player, int>* player_tree, Player& player) {
-    int player_id = player.getPlayerId();
-    player_tree->insert(player_id, player);
+    int *player_id = new int(player.getPlayerId());
+    player_tree->insert(*player_id, player);
 }
 
 void PlayerTree::completeChallenge(Tree<Player, int>* player_tree, int playerId, int coins) {
