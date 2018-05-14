@@ -178,6 +178,6 @@ void quit(void** DS) {
     if (DS == nullptr || *DS == nullptr) {
         return;
     }
-    delete ((Oasis*)DS);
+    delete ((Oasis*)(*DS));
     *DS = nullptr;
 }

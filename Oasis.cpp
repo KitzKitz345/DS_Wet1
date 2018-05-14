@@ -5,7 +5,7 @@
 #include "Oasis.h"
 #include "Tree.h"
 
-Oasis::Oasis() : best_player(nullptr) {
+Oasis::Oasis() : players(nullptr), clans(nullptr), players_by_coins(nullptr), best_player(nullptr) {
     Tree<Player,int>* players = new Tree<Player,int>();
     this->players = players;
     Tree<Player,Pair>* players_by_coins = new Tree<Player,Pair>();

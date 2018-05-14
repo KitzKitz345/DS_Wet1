@@ -81,15 +81,15 @@ class Tree {
 
     void find_roll(){
         int BF = this->h_left - this->h_right;
-        int lson_BF = this->lson->h_left - this->lson->h_right;
-        int rson_BF = this->rson->h_left - this->rson->h_right;
         if (BF == 2){
+            int lson_BF = this->lson->h_left - this->lson->h_right;
             if(lson_BF >= 0){
                 this->LL_Roll();
             } else if (lson_BF == -1){
                 this->LR_Roll();
             }
         } else if (BF == -2){
+            int rson_BF = this->rson->h_left - this->rson->h_right;
             if(rson_BF <= 0){
                 this->RR_Roll();
             } else if (rson_BF == 1){
@@ -285,13 +285,13 @@ public:
     }
 
     void insert(Key& key, Data& data) {
-        Tree* T = &this->find(key);
-        if (T->data == nullptr){
-            T->key = &key;
-            T->data = &data;
-            T->size = 1;
+        if (this->data == nullptr){
+            this->key = &key;
+            this->data = &data;
+            this->size = 1;
             return;
         }
+        Tree* T = &(this->find(key));
         if (*(T->key) == key) {
             throw AlreadyExist();
         }
@@ -305,8 +305,9 @@ public:
             T = T->rson;
         }
         Tree* T_copy = T;
-        while (T_copy != nullptr){
-            T_copy->size++;
+        T->size++;
+        while (T_copy->father != nullptr){
+            T_copy->father->size++;
             T_copy = T_copy->father;
         }
         T->balance();
