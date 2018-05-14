@@ -352,13 +352,13 @@ int main() {
     };
     int the_challenger=0,size=-1,*score_board= nullptr;
     checkBadInputs(oasis,the_challenger,size,score_board);
-    checkAddPlayer(oasis,the_challenger,size,score_board);
+    /*checkAddPlayer(oasis,the_challenger,size,score_board);
     checkAddClan(oasis);
     checkJoinClan(oasis);
     checkCompleteChallange(oasis);
     checkGetBestPlayer(oasis,the_challenger);
     checkGetScoreboardFirst(oasis,size,score_board);
-    checkUniteClans(oasis,size,score_board,the_challenger);
+    checkUniteClans(oasis,size,score_board,the_challenger);*/
     quit(&oasis);
     assert(oasis==NULL);
     std::cout<<"all good, take a penguin:"<<std::endl;
