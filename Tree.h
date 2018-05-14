@@ -227,7 +227,7 @@ class Tree {
         }
     }
 
-    void switch_nodes(Tree& to_switch){
+    Tree* switch_nodes(Tree& to_switch){
         Tree* temp_tree = this->father;
         if (temp_tree->lson->key == this->key) {
             temp_tree->lson = &to_switch;
@@ -252,6 +252,7 @@ class Tree {
         this->rson = nullptr;
 
         to_switch.lson = this->lson;
+        to_switch.lson->father = &to_switch;
         this->lson = nullptr;
 
         to_switch.h_left = this->h_left;
@@ -262,15 +263,28 @@ class Tree {
 
         to_switch.size = this->size;
         this->size = 1;
+
+        return this->father;
     }
 
-    void remove_two_sons(Key& key){
+    Tree* remove_two_sons(Key& key){
         Tree* next_node = this->rson;
         while (next_node->lson != nullptr) {
             next_node = next_node->lson;
         }
-        this->switch_nodes(*next_node);
-        remove(*(this->key));
+        Tree* father_of_garbage = this->switch_nodes(*next_node);
+        if (father_of_garbage->lson->key == this->key){
+            father_of_garbage->lson = nullptr;
+        } else {
+            father_of_garbage->rson = nullptr;
+        }
+        next_node->balance();
+        Tree* root = next_node;
+        while(root->father != nullptr){
+            root = root->father;
+        }
+        return root;
+
     }
 
 public:
@@ -397,7 +411,11 @@ public:
         } else if (T->lson == nullptr || T->rson == nullptr){ //T has only one son
             T->remove_only_one_son();
         } else {
-            T->remove_two_sons(key);
+            Tree* new_root = T->remove_two_sons(key);
+            if (*(this->key) != key){
+                delete T;
+            }
+            return new_root;
         }
         parent->balance();
         Tree* root = this;
