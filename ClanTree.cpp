@@ -71,11 +71,9 @@ void Clan::completedChallenge(Player& player){
 
 
 void ClanTree::addClan(Tree<Clan, int>** clan_tree, int id){
-    if ((*clan_tree)->find(id).getData().getClanId() == id){
-        throw Tree<Clan, int>::AlreadyExist();
-    }
     Clan* new_clan = new Clan(id);
-    (*clan_tree) = (*clan_tree)->insert(id, *new_clan);
+    int* key = new int(id);
+    (*clan_tree) = (*clan_tree)->insert(*key, *new_clan);
 }
 
 void Clan::insertPlayerToClanCoins(Pair& key, Player& player){
