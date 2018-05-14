@@ -40,9 +40,9 @@ void CoinTree::insertPlayerByCoin(Tree<Player, Pair>** coin_tree, Pair& key, Pla
     (*coin_tree) = (*coin_tree)->insert(key, player);
 }
 
-void CoinTree::removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coins) {
+void CoinTree::removePlayer(Tree<Player, Pair>** coin_tree, int playerId, int coins) {
     Pair* p = new Pair(playerId, coins);
-    coin_tree->remove(*p);
+    (*coin_tree) = (*coin_tree)->remove(*p);
     delete p;
 }
 

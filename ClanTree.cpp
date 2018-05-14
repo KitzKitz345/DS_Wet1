@@ -83,12 +83,12 @@ void Clan::insertPlayerToClanCoins(Pair& key, Player& player){
 }
 
 void Clan::removePlayerFromClanCoins(Player& player){
-    CoinTree::removePlayer(this->players_by_coins, player.getPlayerId(), player.getCoins());
+    CoinTree::removePlayer(&(this->players_by_coins), player.getPlayerId(), player.getCoins());
 }
 
-void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
-    Clan* clan1 = &(clan_tree->find(id1).getData());
-    Clan* clan2 = &(clan_tree->find(id2).getData());
+void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
+    Clan* clan1 = &((*clan_tree)->find(id1).getData());
+    Clan* clan2 = &((*clan_tree)->find(id2).getData());
     if (clan1->getClanId() != id1 || clan2->getClanId() != id2){
         throw Tree<Clan, int>::DoesNotExist();
     }
@@ -120,7 +120,7 @@ void ClanTree::uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2){
     }
     delete player_arr;
     int id_to_remove = from->getClanId();
-    clan_tree->remove(id_to_remove);
+    (*clan_tree) = (*clan_tree)->remove(id_to_remove);
     delete from;
 }
 

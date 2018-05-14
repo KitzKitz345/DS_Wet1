@@ -51,7 +51,7 @@ void Oasis::completeChallenge(int playerId, int coins) {
         throw Tree<Player, int>::DoesNotExist();
     }
     int original_coins = advanced_player.getCoins();
-    CoinTree::removePlayer(this->players_by_coins, playerId, original_coins);
+    CoinTree::removePlayer(&(this->players_by_coins), playerId, original_coins);
     advanced_player.getClan()->removePlayerFromClanCoins(advanced_player);
     PlayerTree::completeChallenge(this->players, playerId, coins);
     Pair* key = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
@@ -114,5 +114,5 @@ void Oasis::getScoreboard(int clanID, int **players, int *numOfPlayers){
 
 void Oasis::uniteClans(int clanID1, int clanID2)
 {
-    ClanTree::uniteClans(this->clans, clanID1, clanID2);
+    ClanTree::uniteClans(&(this->clans), clanID1, clanID2);
 }
