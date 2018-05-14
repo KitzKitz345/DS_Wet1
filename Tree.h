@@ -27,22 +27,41 @@ class Tree {
         }
     }
 
+/*    void LL_Roll () {
+        int size_lson = this->lson->size;
+        this->lson->size = this->size;
+        this->size = size_lson;
+
+        Tree* ptr_lson = this->lson;
+
+        if (this->father == nullptr) {
+            this->father = this->lson;
+            this->lson->father = nullptr;
+            Tree* ptr_lson_rson = this->lson->rson;
+            this->lson->rson = this;
+            this->lson = ptr_lson_rson;
+        } else {
+            this->lson->rson = this;
+            this->lson = this->lson->rson;
+            if (this->father->lson == this) {
+                this->father->lson = ptr_lson;
+            }
+            if (this->father->rson == this) {
+                this->father->rson = ptr_lson;
+            }
+            ptr_lson->father = this->father;
+            this->father = ptr_lson;
+        }
+        this->update_heights();
+        this->father->update_heights();
+    }*/
+
     void LL_Roll () {
         int size_lson = this->lson->size;
         this->lson->size = this->size;
-        this->size = size_lson-1;
+        this->size = size_lson;
 
-        Tree* ptr_lson = this->lson;
-        this->lson = this->lson->rson;
-        ptr_lson->rson = this;
 
-        if (this->father->lson == this) {
-            this->father->lson = ptr_lson;
-        }
-        if (this->father->rson == this) {
-            this->father->rson = ptr_lson;
-        }
-        this->father = ptr_lson;
 
         this->update_heights();
         this->father->update_heights();
@@ -51,22 +70,30 @@ class Tree {
     void RR_Roll () {
         int size_rson = this->rson->size;
         this->rson->size = this->size;
-        this->size = size_rson-1;
+        this->size = size_rson;
 
         Tree* ptr_rson = this->rson;
-        this->rson = this->rson->lson;
-        ptr_rson->lson = this;
 
-        if (this->father->lson == this) {
-            this->father->lson = ptr_rson;
+        if (this->father == nullptr) {
+            this->father = this->rson;
+            this->rson->father = nullptr;
+            Tree* ptr_rson_lson = this->rson->lson;
+            this->rson->lson = this;
+            this->rson = ptr_rson_lson;
+        } else {
+            this->rson = this->rson->lson;
+            ptr_rson->lson = this;
+            if (this->father->lson == this) {
+                this->father->lson = ptr_rson;
+            }
+            if (this->father->rson == this) {
+                this->father->rson = ptr_rson;
+            }
+            ptr_rson->father = this->father;
+            this->father = ptr_rson;
         }
-        if (this->father->rson == this) {
-            this->father->rson = ptr_rson;
-        }
-        this->father = ptr_rson;
-
-        this->update_heights();
         this->father->update_heights();
+        this->update_heights();
     }
 
     void LR_Roll () {
