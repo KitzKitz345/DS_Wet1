@@ -9,7 +9,8 @@
 
 Clan::Clan(int id): clan_id(id), players(nullptr), players_by_coins(nullptr),
                              best_player(nullptr){
-
+    this->players = new Tree<Player, int>();
+    this->players_by_coins = new Tree<Player, Pair>();
 }
 
 Clan::~Clan(){
