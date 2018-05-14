@@ -122,6 +122,8 @@ StatusType getScoreboard(void *DS, int clanID, int **players, int *numOfPlayers)
         return FAILURE;
     }  catch (Tree<Clan, int>::DoesNotExist& e) {
         return FAILURE;
+    }  catch (Tree<Player, Pair>::EmptyTree& e) {
+        return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
     } catch (std::exception& e) {
@@ -142,6 +144,8 @@ StatusType uniteClans(void *DS, int clanID1, int clanID2)
     }  catch (Tree<Player, Pair>::DoesNotExist& e) {
         return FAILURE;
     }  catch (Tree<Clan, int>::DoesNotExist& e) {
+        return FAILURE;
+    }  catch (Tree<Clan, int>::EmptyTree& e) {
         return FAILURE;
     } catch (std::bad_alloc& e) {
         return ALLOCATION_ERROR;
