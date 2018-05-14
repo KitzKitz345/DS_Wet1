@@ -17,7 +17,7 @@ class Oasis {
 
 public:
     explicit Oasis();
-    ~Oasis(); // need to finish destructor
+    ~Oasis();
     Oasis(const Oasis& oasis) = delete;
     void addClan(int clanID);
     void joinClan(int playerID, int clanID);

@@ -17,7 +17,6 @@ public:
     bool operator==(const Pair& p) const;
     bool operator!=(const Pair& p) const;
     bool operator>(const Pair& p) const;
-/*  bool operator<(const Pair& p) const;       is needed??*/
 
 };
 
@@ -27,10 +26,5 @@ namespace CoinTree{
     void removePlayer(Tree<Player, Pair>* coin_tree, int playerId, int coins);
     void deleteTree(Tree<Player, Pair>* coin_tree);
 }
-
-
-/*
-unitePlayerTrees
-maybe exceptions*/
 
 #endif //CODE_COINTREE_H

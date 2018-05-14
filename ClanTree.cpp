@@ -62,7 +62,6 @@ void Clan::getScoreBoard(int **players, int *numOfPlayers){
 }
 
 void Clan::completedChallenge(Player& player){
-    //Remove and insert to coin tree using coin tree function completeChallenge
     if (player.getChallenges() >= this->best_player->getChallenges()){
         if (player.getPlayerId() < this->best_player->getPlayerId()){
             this->best_player = &player;

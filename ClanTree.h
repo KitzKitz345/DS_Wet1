@@ -30,9 +30,6 @@ public:
     void completedChallenge(Player& player);
 };
 
-//maybe exceptions
-//class aaa : public std::exception {};
-
 namespace ClanTree{
 
     class AlreadyInClan : public std::exception {};
@@ -41,8 +38,6 @@ namespace ClanTree{
     void uniteClans(Tree<Clan, int>* clan_tree, int id1, int id2);
     void deleteTree(Tree<Clan, int>* clan_tree);
 }
-
-
 
 
 #endif //CODE_CLANTREE_H

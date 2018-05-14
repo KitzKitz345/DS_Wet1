@@ -32,9 +32,6 @@ class Tree {
         this->lson->size = this->size;
         this->size = size_lson-1;
 
-        //this->h_left = this->lson->h_right;
-        //this->lson->h_right++;
-
         Tree* ptr_lson = this->lson;
         this->lson = this->lson->rson;
         ptr_lson->rson = this;
@@ -55,9 +52,6 @@ class Tree {
         int size_rson = this->rson->size;
         this->rson->size = this->size;
         this->size = size_rson-1;
-
-        //this->h_right = this->rson->h_left;
-        //this->rson->h_left++;
 
         Tree* ptr_rson = this->rson;
         this->rson = this->rson->lson;
@@ -282,7 +276,7 @@ public:
         if (this->lson != nullptr) {
             data = this->lson->inorder(data);
         }
-        *data = this->data; // needs an operator overloading?
+        *data = this->data;
         data++;
         if (this->rson != nullptr) {
             data = this->rson->inorder(data);

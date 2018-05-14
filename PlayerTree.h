@@ -33,10 +33,4 @@ namespace PlayerTree {
     void deleteTree(Tree<Player,int>* player_tree);
 }
 
-
-/*
-removePlayer
-unitePlayerTrees
-maybe exceptions*/
-
 #endif //CODE_PLAYERTREE_H

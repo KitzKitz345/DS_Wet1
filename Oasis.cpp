@@ -45,7 +45,6 @@ void Oasis::joinClan(int playerID, int clanID)
     clan->joinClan(*player);
 }
 
-//need to add another check if the edited player is the best in the entire system
 void Oasis::completeChallenge(int playerId, int coins) {
     Player& advanced_player = this->players->find(playerId).getData();
     if (advanced_player.getPlayerId() != playerId){

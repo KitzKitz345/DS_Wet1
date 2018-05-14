@@ -44,6 +44,9 @@ void PlayerTree::insertPlayer(Tree<Player, int>* player_tree, Player& player) {
 void PlayerTree::completeChallenge(Tree<Player, int>* player_tree, int playerId, int coins) {
     Tree<Player, int>& node = player_tree->find(playerId);
     Player& player = node.getData();
+    if (player.getPlayerId() != playerId) {
+        throw Tree<Player,int>::DoesNotExist();
+    }
     player.addCoins(coins);
     player.incChallenges();
 }

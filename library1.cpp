@@ -13,7 +13,6 @@ StatusType addPlayer(void *DS, int playerID, int initialCoins) {
     if (DS == nullptr || playerID <= 0 || initialCoins < 0) {
         return INVALID_INPUT;
     }
-    //need to check if players tree is null?
     try {
         Player* new_player = new Player(playerID,initialCoins,0);
         ((Oasis*)DS)->insertPlayer(*new_player);
@@ -74,7 +73,7 @@ StatusType joinClan(void *DS, int playerID, int clanID){
 }
 
 StatusType completeChallange(void *DS, int playerID, int coins) {
-    if (DS == nullptr || playerID <= 0 || coins < 0) {
+    if (DS == nullptr || playerID <= 0 || coins <= 0) {
         return INVALID_INPUT;
     }
     try {
