@@ -297,12 +297,11 @@ class Tree {
             next_node = next_node->lson;
         }
         Tree* father_of_garbage = this->switch_nodes(*next_node);
-        if (father_of_garbage->lson->key == this->key){
-            father_of_garbage->lson = nullptr;
+        if (this->rson != nullptr){
+            this->remove_only_one_son();
         } else {
-            father_of_garbage->rson = nullptr;
+            this->remove_leaf();
         }
-        //next_node->balance();
         father_of_garbage->balance();
         Tree* root = next_node;
         while(root->father != nullptr){
