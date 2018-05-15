@@ -49,7 +49,9 @@ void Oasis::completeChallenge(int playerId, int coins) {
     }
     int original_coins = advanced_player.getCoins();
     CoinTree::removePlayer(&(this->players_by_coins), playerId, original_coins);
-    advanced_player.getClan()->removePlayerFromClanCoins(advanced_player);
+    if (advanced_player.getClan() != nullptr){
+        advanced_player.getClan()->removePlayerFromClanCoins(advanced_player);
+    }
     PlayerTree::completeChallenge(this->players, playerId, coins);
     Pair* key = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
     CoinTree::insertPlayerByCoin(&(this->players_by_coins), *key, advanced_player);
@@ -59,10 +61,10 @@ void Oasis::completeChallenge(int playerId, int coins) {
             playerId < this->best_player->getCoins()){
         this->best_player = &advanced_player;
     }
-    Pair* key_for_clan = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
-    advanced_player.getClan()->insertPlayerToClanCoins(*key_for_clan, advanced_player);
     Clan* clan_of_player = advanced_player.getClan();
     if (clan_of_player != nullptr){
+        Pair* key_for_clan = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
+        advanced_player.getClan()->insertPlayerToClanCoins(*key_for_clan, advanced_player);
         clan_of_player->completedChallenge(advanced_player);
     }
 }
