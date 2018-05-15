@@ -27,6 +27,12 @@ class Tree {
         }
     }
 
+    void point_to_null(){
+        this->father = nullptr;
+        this->rson = nullptr;
+        this->lson = nullptr;
+    }
+
     void LL_Roll () {
         Tree* ptr_lson = this->lson;
 
@@ -202,11 +208,15 @@ class Tree {
             parent->size--;
             parent = parent->father;
         }
+        this->point_to_null();
     }
 
     void remove_only_one_son(){
         Tree* parent = this->father;
-        bool is_left_son = parent->lson->key == key;
+        bool is_left_son = false;
+        if (parent->lson != nullptr){
+            is_left_son = parent->lson->key == key;
+        }
         Tree* only_son = nullptr;
         if (this->lson == nullptr){
             only_son = this->rson;
@@ -228,6 +238,7 @@ class Tree {
             parent->size--;
             parent = parent->father;
         }
+        this->point_to_null();
     }
 
     Tree* switch_nodes(Tree& to_switch){
