@@ -63,7 +63,9 @@ void Clan::getScoreBoard(int **players, int *numOfPlayers){
 }
 
 void Clan::completedChallenge(Player& player){
-    if (player.getChallenges() >= this->best_player->getChallenges()){
+    if (player.getChallenges() > this->best_player->getChallenges()) {
+        this->best_player = &player;
+    } else if (player.getChallenges() == this->best_player->getChallenges()){
         if (player.getPlayerId() < this->best_player->getPlayerId()){
             this->best_player = &player;
         }

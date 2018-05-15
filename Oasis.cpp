@@ -55,10 +55,10 @@ void Oasis::completeChallenge(int playerId, int coins) {
     PlayerTree::completeChallenge(this->players, playerId, coins);
     Pair* key = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
     CoinTree::insertPlayerByCoin(&(this->players_by_coins), *key, advanced_player);
-    if (advanced_player.getCoins() > this->best_player->getCoins()){
+    if (advanced_player.getChallenges() > this->best_player->getChallenges()){
         this->best_player = &advanced_player;
-    } else if (advanced_player.getCoins() == this->best_player->getCoins() &&
-            playerId < this->best_player->getCoins()){
+    } else if (advanced_player.getChallenges() == this->best_player->getChallenges() &&
+            playerId < this->best_player->getPlayerId()){
         this->best_player = &advanced_player;
     }
     Clan* clan_of_player = advanced_player.getClan();
