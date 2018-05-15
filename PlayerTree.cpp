@@ -41,6 +41,16 @@ void PlayerTree::insertPlayer(Tree<Player, int>** player_tree, Player& player) {
     (*player_tree) = (*player_tree)->insert(*player_id, player);
 }
 
+void PlayerTree::removePlayer(Tree<Player, int>** player_tree, int playerId){
+    int* p = new int(playerId);
+    Tree<Player, int>* current_root = (*player_tree);
+    (*player_tree) = (*player_tree)->remove(*p);
+    if (current_root->getData().getPlayerId() == playerId){
+        delete current_root;
+    }
+    delete p;
+}
+
 void PlayerTree::completeChallenge(Tree<Player, int>* player_tree, int playerId, int coins) {
     Tree<Player, int>& node = player_tree->find(playerId);
     Player& player = node.getData();

@@ -34,10 +34,6 @@ void Clan::getPlayers(Player** player_arr){
     this->players->inorder(player_arr);
 }
 
-Tree<Player, int>* Clan::getPlayerTree(){
-    return this->players;
-}
-
 void Clan::joinClan(Player &new_player) {
     if (new_player.getClan() != nullptr){
         throw ClanTree::AlreadyInClan();
@@ -87,6 +83,10 @@ void Clan::insertPlayerToClanCoins(Pair& key, Player& player){
     CoinTree::insertPlayerByCoin(&(this->players_by_coins), key, player);
 }
 
+void Clan::removePlayerFromClanPlayersTree(Player& player){
+    PlayerTree::removePlayer(&(this->players), player.getPlayerId());
+}
+
 void Clan::removePlayerFromClanCoins(Player& player){
     CoinTree::removePlayer(&(this->players_by_coins), player.getPlayerId(), player.getCoins());
 }
@@ -115,33 +115,36 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
         }
     }
     int n_to = to->getSize();
-    Player** to_player_arr = new Player*[n_to];
-    to->getPlayers(to_player_arr);
-    for(int i = 0; i < n_to; i++){
-        if ((*(to_player_arr+i))->getChallenges() == 0){
-            int* key = new int((*(to_player_arr+i))->getPlayerId());
-            to->getPlayerTree()->remove(*key);
-            delete key;
-            to->removePlayerFromClanCoins(**(to_player_arr+i));
+    if (n_to != 0){
+        Player** to_player_arr = new Player*[n_to];
+        to->getPlayers(to_player_arr);
+        for(int i = 0; i < n_to; i++){
+            if ((*(to_player_arr+i))->getChallenges() == 0){
+                to->removePlayerFromClanPlayersTree(**(to_player_arr+i));
+                to->removePlayerFromClanCoins(**(to_player_arr+i));
+            }
         }
+        delete to_player_arr;
     }
-    delete to_player_arr;
     int n = from->getSize();
-    Player** player_arr = new Player*[n];
-    from->getPlayers(player_arr);
-    for(int i = 0; i < n; i++){
-        (*(player_arr+i))->setClan(nullptr);
-        if ((*(player_arr+i))->getChallenges() != 0){
-            to->joinClan(**(player_arr+i));
+    int* id_to_remove = new int(from->getClanId());
+    if(n != 0){
+        Player** player_arr = new Player*[n];
+        from->getPlayers(player_arr);
+        for(int i = 0; i < n; i++){
+            (*(player_arr+i))->setClan(nullptr);
+            if ((*(player_arr+i))->getChallenges() != 0){
+                to->joinClan(**(player_arr+i));
+            }
         }
+        delete player_arr;
     }
-    delete player_arr;
-    int id_to_remove = from->getClanId();
     Tree<Clan, int>* current_root = (*clan_tree);
-    (*clan_tree) = (*clan_tree)->remove(id_to_remove);
-    if (current_root->getData().getClanId() == id_to_remove){
+    (*clan_tree) = (*clan_tree)->remove(*id_to_remove);
+    if (current_root->getData().getClanId() == *id_to_remove){
         delete current_root;
     }
+    delete id_to_remove;
     delete from;
 }
 
