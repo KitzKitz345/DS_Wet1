@@ -234,7 +234,7 @@ class Tree {
         }else{
             temp_tree->rson = &to_switch;
         }
-
+        Tree* to_switch_r_son = to_switch.rson;
         if (to_switch.father->key == this->key){
             to_switch.rson = this;
             this->father = &to_switch;
@@ -249,7 +249,8 @@ class Tree {
         }
 
         to_switch.father = temp_tree;
-        this->rson = nullptr;
+        //this->rson = nullptr;
+        this->rson = to_switch_r_son;
 
         to_switch.lson = this->lson;
         to_switch.lson->father = &to_switch;
@@ -258,11 +259,15 @@ class Tree {
         to_switch.h_left = this->h_left;
         this->h_left = 0;
 
+        int to_switch_hr = to_switch.h_right;
         to_switch.h_right = this->h_right;
-        this->h_right = 0;
+        //this->h_right = 0;
+        this->h_right = to_switch_hr;
 
+        int to_switch_size = to_switch.size;
         to_switch.size = this->size;
-        this->size = 1;
+        //this->size = 1;
+        this->size = to_switch_size;
 
         return this->father;
     }
