@@ -23,6 +23,7 @@ public:
     Player* getBestPlayer();
     int getSize();
     void getPlayers(Player** player_arr);
+    Tree<Player, int>* getPlayerTree();
     void joinClan(Player& new_player);
     void removePlayerFromClanCoins(Player& player);
     void insertPlayerToClanCoins(Pair& key, Player& player);

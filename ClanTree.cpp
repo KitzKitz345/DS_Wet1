@@ -34,6 +34,10 @@ void Clan::getPlayers(Player** player_arr){
     this->players->inorder(player_arr);
 }
 
+Tree<Player, int>* Clan::getPlayerTree(){
+    return this->players;
+}
+
 void Clan::joinClan(Player &new_player) {
     if (new_player.getClan() != nullptr){
         throw ClanTree::AlreadyInClan();
@@ -110,6 +114,18 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
             from = clan1;
         }
     }
+    int n_to = to->getSize();
+    Player** to_player_arr = new Player*[n_to];
+    to->getPlayers(to_player_arr);
+    for(int i = 0; i < n_to; i++){
+        if ((*(to_player_arr+i))->getChallenges() == 0){
+            int* key = new int((*(to_player_arr+i))->getPlayerId());
+            to->getPlayerTree()->remove(*key);
+            delete key;
+            to->removePlayerFromClanCoins(**(to_player_arr+i));
+        }
+    }
+    delete to_player_arr;
     int n = from->getSize();
     Player** player_arr = new Player*[n];
     from->getPlayers(player_arr);
