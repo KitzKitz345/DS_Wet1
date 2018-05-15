@@ -178,6 +178,18 @@ class Tree {
 
     void balance() {
         Tree* T = this;
+        while(T != nullptr){
+            T->update_heights();
+            int BF = T->h_left - T->h_right;
+            if(BF >= 2 || BF <= -2){
+                T->find_roll();
+            }
+            T = T->father;
+        }
+    }
+/*
+    void balance() {
+        Tree* T = this;
         while(T->father != nullptr){
             Tree* current_father = T->father;
             current_father->update_heights();
@@ -188,7 +200,7 @@ class Tree {
             T = current_father;
         }
     }
-
+*/
     void remove_leaf(){
         Tree* parent = this->father;
         bool is_left_son = false;
