@@ -121,7 +121,7 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
     int id_to_remove = from->getClanId();
     Tree<Clan, int>* current_root = (*clan_tree);
     (*clan_tree) = (*clan_tree)->remove(id_to_remove);
-    if ((*clan_tree)->getRootKey() == id_to_remove){
+    if (current_root->getData().getClanId() == id_to_remove){
         delete current_root;
     }
     delete from;

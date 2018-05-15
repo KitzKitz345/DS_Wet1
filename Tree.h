@@ -185,7 +185,10 @@ class Tree {
 
     void remove_leaf(){
         Tree* parent = this->father;
-        bool is_left_son = parent->lson->key == key;
+        bool is_left_son = false;
+        if (parent->lson != nullptr){
+            is_left_son = parent->lson->key == key;
+        }
         if (is_left_son){
             //delete parent->lson;
             parent->lson = nullptr;
@@ -229,16 +232,19 @@ class Tree {
 
     Tree* switch_nodes(Tree& to_switch){
         Tree* temp_tree = this->father;
-        if (temp_tree->lson->key == this->key) {
-            temp_tree->lson = &to_switch;
-        }else{
-            temp_tree->rson = &to_switch;
+        if (temp_tree != nullptr){
+            if (temp_tree->lson->key == this->key) {
+                temp_tree->lson = &to_switch;
+            }else{
+                temp_tree->rson = &to_switch;
+            }
         }
         Tree* to_switch_r_son = to_switch.rson;
         if (to_switch.father->key == this->key){
             to_switch.rson = this;
             this->father = &to_switch;
         } else {
+            this->rson->father = &to_switch;
             if (to_switch.father->lson->key == to_switch.key){
                 to_switch.father->lson = this;
             } else {
@@ -249,11 +255,15 @@ class Tree {
         }
 
         to_switch.father = temp_tree;
-        //this->rson = nullptr;
         this->rson = to_switch_r_son;
+        if (to_switch_r_son != nullptr){
+            to_switch_r_son->father = this;
+        }
 
         to_switch.lson = this->lson;
-        to_switch.lson->father = &to_switch;
+        if (to_switch.lson != nullptr){
+            to_switch.lson->father = &to_switch;
+        }
         this->lson = nullptr;
 
         to_switch.h_left = this->h_left;
@@ -261,12 +271,10 @@ class Tree {
 
         int to_switch_hr = to_switch.h_right;
         to_switch.h_right = this->h_right;
-        //this->h_right = 0;
         this->h_right = to_switch_hr;
 
         int to_switch_size = to_switch.size;
         to_switch.size = this->size;
-        //this->size = 1;
         this->size = to_switch_size;
 
         return this->father;
@@ -283,13 +291,13 @@ class Tree {
         } else {
             father_of_garbage->rson = nullptr;
         }
-        next_node->balance();
+        //next_node->balance();
+        father_of_garbage->balance();
         Tree* root = next_node;
         while(root->father != nullptr){
             root = root->father;
         }
         return root;
-
     }
 
 public:
@@ -410,7 +418,6 @@ public:
             throw DoesNotExist();
         }
         Tree* parent = T->father;
-        //bool is_left_son = *(parent->lson->key) == key;
         if (T->size == 1) {
             T->remove_leaf();
         } else if (T->lson == nullptr || T->rson == nullptr){ //T has only one son

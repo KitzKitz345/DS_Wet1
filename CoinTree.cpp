@@ -44,7 +44,8 @@ void CoinTree::removePlayer(Tree<Player, Pair>** coin_tree, int playerId, int co
     Pair* p = new Pair(playerId, coins);
     Tree<Player, Pair>* current_root = (*coin_tree);
     (*coin_tree) = (*coin_tree)->remove(*p);
-    if ((*coin_tree)->getRootKey() == *p){
+    if (current_root->getData().getPlayerId() == playerId &&
+        current_root->getData().getCoins() == coins){
         delete current_root;
     }
     delete p;
