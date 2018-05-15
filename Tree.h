@@ -435,6 +435,7 @@ public:
             T->remove_only_one_son();
         } else {
             Tree* new_root = T->remove_two_sons(key);
+            T->point_to_null();
             if (*(this->key) != key){
                 delete T;
             }
