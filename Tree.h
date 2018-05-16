@@ -467,22 +467,28 @@ public:
         if (this->data == nullptr) {
             throw EmptyTree(); // need to catch this somewhere
         }
-        if (this->lson != nullptr && this->lson->lson != nullptr) {
+        if ((this->lson != nullptr && this->lson->lson != nullptr) ||
+            (this->lson != nullptr && this->lson->rson != nullptr)) {
             this->lson->deleteTree();
         }
-        if (this->lson != nullptr && this->lson->rson != nullptr) {
+        /*if (this->lson != nullptr && this->lson->rson != nullptr) {
             this->lson->deleteTree();
-        }
-        if (this->rson != nullptr && this->rson->lson != nullptr) {
+        }*/
+        if ((this->rson != nullptr && this->rson->lson != nullptr) ||
+            (this->rson != nullptr && this->rson->rson != nullptr)) {
             this->rson->deleteTree();
         }
-        if (this->rson != nullptr && this->rson->rson != nullptr) {
+        /*if (this->rson != nullptr && this->rson->rson != nullptr) {
             this->rson->deleteTree();
-        }
-        delete this->lson->data;
+        }*/
+        /*delete this->lson->data;
         delete this->rson->data;
         delete this->lson->key;
-        delete this->rson->key;
+        delete this->rson->key;*/
+        delete this->lson;
+        delete this->rson;
+        this->lson = nullptr;
+        this->rson = nullptr;
     }
 };
 

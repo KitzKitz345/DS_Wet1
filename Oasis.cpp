@@ -15,7 +15,7 @@ Oasis::~Oasis() {
     ClanTree::deleteTree(this->clans);
     PlayerTree::deleteTree(this->players);
     CoinTree::deleteTree(this->players_by_coins);
-    PlayerTree::deleteTree(this->players);
+    //PlayerTree::deleteTree(this->players);
 }
 
 void Oasis::insertPlayer(Player& player) {

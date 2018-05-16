@@ -14,8 +14,10 @@ Clan::Clan(int id): clan_id(id), players(nullptr), players_by_coins(nullptr),
 }
 
 Clan::~Clan(){
-    delete players;
-    delete players_by_coins;
+    //delete players;
+    //delete players_by_coins;
+    PlayerTree::deleteTree(this->players);
+    CoinTree::deleteTree(this->players_by_coins);
 }
 
 int Clan::getClanId() {
@@ -145,7 +147,10 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
         delete current_root;
     }
     delete id_to_remove;
-    delete from;
+    if (from->getSize() != 0) {
+        delete from;
+    }
+    //delete from;
 }
 
 void ClanTree::deleteTree(Tree<Clan, int>* clan_tree) {
