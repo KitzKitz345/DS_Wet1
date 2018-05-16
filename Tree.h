@@ -464,23 +464,21 @@ public:
         return root;
     }
 
-    void deleteTree () {
+    void deleteTree (bool delete_data) {
         if (this->data == nullptr) {
             return;
             //throw EmptyTree(); not relevant to this usage
         }
-        if ((this->lson != nullptr && this->lson->lson != nullptr) ||
-            (this->lson != nullptr && this->lson->rson != nullptr)) {
-            this->lson->deleteTree();
-            this->lson = nullptr;
+        if (this->lson != nullptr) {
+            this->lson->deleteTree(delete_data);
+            //this->lson = nullptr;
         }
         /*if (this->lson != nullptr && this->lson->rson != nullptr) {
             this->lson->deleteTree();
         }*/
-        if ((this->rson != nullptr && this->rson->lson != nullptr) ||
-            (this->rson != nullptr && this->rson->rson != nullptr)) {
-            this->rson->deleteTree();
-            this->rson = nullptr;
+        if (this->rson != nullptr) {
+            this->rson->deleteTree(delete_data);
+            //this->rson = nullptr;
         }
         /*if (this->rson != nullptr && this->rson->rson != nullptr) {
             this->rson->deleteTree();
@@ -491,6 +489,10 @@ public:
         delete this->rson->key;*/
         delete this->lson;
         delete this->rson;
+        if (delete_data == true) {
+            delete this->data;
+        }
+        this->data = nullptr;
         this->lson = nullptr;
         this->rson = nullptr;
     }

@@ -14,24 +14,23 @@ Oasis::Oasis() : players(nullptr), clans(nullptr), players_by_coins(nullptr), be
 Oasis::~Oasis() {
     ClanTree::deleteTree(this->clans);
     this->clans = nullptr;
-    PlayerTree::deleteTree(this->players);
+    PlayerTree::deleteTree(this->players, true);
     this->players = nullptr;
-    CoinTree::deleteTree(this->players_by_coins);
+    CoinTree::deleteTree(this->players_by_coins, false);
     this->players_by_coins = nullptr;
 }
 
-void Oasis::insertPlayer(Player& player) {
+void Oasis::insertPlayer(Player& player, Pair& coin_key, int& id_key) {
     if (this->best_player == nullptr || (this->best_player->getChallenges() == 0 &&
         this->best_player->getPlayerId() > player.getPlayerId())){
         this->best_player = &player;
     }
-    PlayerTree::insertPlayer(&(this->players), player);
-    Pair* key = new Pair(player.getPlayerId(), player.getCoins());
-    CoinTree::insertPlayerByCoin(&(this->players_by_coins), *key, player);
+        PlayerTree::insertPlayer(&(this->players), player, id_key);
+        CoinTree::insertPlayerByCoin(&(this->players_by_coins), player, coin_key);
 }
 
-void Oasis::addClan(int clanID){
-    ClanTree::addClan(&(this->clans), clanID);
+void Oasis::addClan(int clanID, Clan& clan, int& key){
+    ClanTree::addClan(&(this->clans), clan, key);
 }
 
 void Oasis::joinClan(int playerID, int clanID)
@@ -41,7 +40,15 @@ void Oasis::joinClan(int playerID, int clanID)
     if (clan->getClanId() != clanID || player->getPlayerId() != playerID){
         throw Tree<Clan, int>::DoesNotExist();
     }
-    clan->joinClan(*player);
+    Pair* pair_key = new Pair(player->getPlayerId(), player->getCoins());
+    int* id_key = new int(player->getPlayerId());
+    try {
+        clan->joinClan(*player, *pair_key, *id_key);
+    } catch (std::exception& e) {
+        delete pair_key;
+        delete id_key;
+        throw e;
+    }
 }
 
 void Oasis::completeChallenge(int playerId, int coins) {
@@ -56,18 +63,29 @@ void Oasis::completeChallenge(int playerId, int coins) {
     }
     PlayerTree::completeChallenge(this->players, playerId, coins);
     Pair* key = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
-    CoinTree::insertPlayerByCoin(&(this->players_by_coins), *key, advanced_player);
-    if (advanced_player.getChallenges() > this->best_player->getChallenges()){
-        this->best_player = &advanced_player;
-    } else if (advanced_player.getChallenges() == this->best_player->getChallenges() &&
-            playerId < this->best_player->getPlayerId()){
-        this->best_player = &advanced_player;
-    }
-    Clan* clan_of_player = advanced_player.getClan();
-    if (clan_of_player != nullptr){
-        Pair* key_for_clan = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
-        advanced_player.getClan()->insertPlayerToClanCoins(*key_for_clan, advanced_player);
-        clan_of_player->completedChallenge(advanced_player);
+    try {
+        CoinTree::insertPlayerByCoin(&(this->players_by_coins), advanced_player, *key);
+        if (advanced_player.getChallenges() > this->best_player->getChallenges()){
+            this->best_player = &advanced_player;
+        } else if (advanced_player.getChallenges() == this->best_player->getChallenges() &&
+                   playerId < this->best_player->getPlayerId()){
+            this->best_player = &advanced_player;
+        }
+        Clan* clan_of_player = advanced_player.getClan();
+        if (clan_of_player != nullptr){
+            Pair* key_for_clan = new Pair(advanced_player.getPlayerId(), advanced_player.getCoins());
+            try {
+                advanced_player.getClan()->insertPlayerToClanCoins(*key_for_clan, advanced_player);
+                clan_of_player->completedChallenge(advanced_player);
+            } catch (std::exception& e) {
+                delete key_for_clan;
+                throw e;
+            }
+
+        }
+    } catch (std::exception& e) {
+        delete key;
+        throw e;
     }
 }
 

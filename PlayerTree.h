@@ -28,10 +28,10 @@ public:
 };
 
 namespace PlayerTree {
-    void insertPlayer(Tree<Player, int>** player_tree, Player& player);
+    void insertPlayer(Tree<Player, int>** player_tree, Player& player, int& id_key);
     void removePlayer(Tree<Player, int>** player_tree, int playerId);
     void completeChallenge(Tree<Player, int>* player_tree, int playerId, int coins);
-    void deleteTree(Tree<Player,int>* player_tree);
+    void deleteTree(Tree<Player,int>* player_tree, bool delete_data);
 }
 
 #endif //CODE_PLAYERTREE_H

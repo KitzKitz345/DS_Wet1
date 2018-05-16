@@ -19,9 +19,9 @@ public:
     explicit Oasis();
     ~Oasis();
     Oasis(const Oasis& oasis) = delete;
-    void addClan(int clanID);
+    void addClan(int clanID, Clan& clan, int& key);
     void joinClan(int playerID, int clanID);
-    void insertPlayer(Player& player);
+    void insertPlayer(Player& player, Pair& coin_key, int& id_key);
     void completeChallenge(int playerId, int coins);
     void getBestPlayer(int clanID, int *playerID);
     void getScoreboard(int clanID, int **players, int *numOfPlayers);

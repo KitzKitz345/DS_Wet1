@@ -13,20 +13,40 @@ StatusType addPlayer(void *DS, int playerID, int initialCoins) {
     if (DS == nullptr || playerID <= 0 || initialCoins < 0) {
         return INVALID_INPUT;
     }
+    Player* new_player = new Player(playerID,initialCoins,0);
+    Pair* coin_key = new Pair(new_player->getPlayerId(), new_player->getCoins());
+    int* id_key = new int(new_player->getPlayerId());
     try {
-        Player* new_player = new Player(playerID,initialCoins,0);
-        ((Oasis*)DS)->insertPlayer(*new_player);
+        ((Oasis*)DS)->insertPlayer(*new_player, *coin_key, *id_key);
     } catch (Tree<Player, int>::AlreadyExist& e){
+        delete new_player;
+        delete coin_key;
+        delete id_key;
         return FAILURE;
     } catch (Tree<Player, Pair>::AlreadyExist& e){
+        delete new_player;
+        delete coin_key;
+        delete id_key;
         return FAILURE;
     } catch (Tree<Clan, int>::AlreadyExist& e){
+        delete new_player;
+        delete coin_key;
+        delete id_key;
         return FAILURE;
     } catch (std::bad_alloc& e) {
+        delete new_player;
+        delete coin_key;
+        delete id_key;
         return ALLOCATION_ERROR;
     }  catch (Tree<Player, Pair>::EmptyTree& e) {
+        delete new_player;
+        delete coin_key;
+        delete id_key;
         return FAILURE;
     } catch (std::exception& e) {
+        delete new_player;
+        delete coin_key;
+        delete id_key;
         return FAILURE;
     }
     return SUCCESS;
@@ -36,19 +56,33 @@ StatusType addClan(void *DS, int clanID){
     if (DS == nullptr || clanID <= 0){
         return INVALID_INPUT;
     }
+    Clan* new_clan = new Clan(clanID);
+    int* key = new int(clanID);
     try{
-        ((Oasis*)DS)->addClan(clanID);
+        ((Oasis*)DS)->addClan(clanID, *new_clan, *key);
     } catch (std::bad_alloc& e){
+        delete new_clan;
+        delete key;
         return ALLOCATION_ERROR;
     } catch (Tree<Player, int>::AlreadyExist& e){
+        delete new_clan;
+        delete key;
         return FAILURE;
     } catch (Tree<Player, Pair>::AlreadyExist& e){
+        delete new_clan;
+        delete key;
         return FAILURE;
     } catch (Tree<Clan, int>::AlreadyExist& e){
+        delete new_clan;
+        delete key;
         return FAILURE;
     }  catch (Tree<Player, Pair>::EmptyTree& e) {
+        delete new_clan;
+        delete key;
         return FAILURE;
     } catch (std::exception& e) {
+        delete new_clan;
+        delete key;
         return FAILURE;
     }
     return SUCCESS;

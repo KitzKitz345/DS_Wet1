@@ -25,18 +25,23 @@ void CoinTree::getScoreBoard(Tree<Player, Pair>* coin_tree, int **players, int *
     int n = coin_tree->getSize();
     *numOfPlayers = n;
     Player** player_arr = new Player*[n];
-    coin_tree->inorder(player_arr);
-    *players = (int*)malloc(n*sizeof(int));
-    if(*players == nullptr){
-        throw std::bad_alloc();
+    try {
+        coin_tree->inorder(player_arr);
+        *players = (int*)malloc(n*sizeof(int));
+        if(*players == nullptr){
+            throw std::bad_alloc();
+        }
+        for (int i=0; i < n; i++){
+            *((*players)+(n-1-i)) = (*(player_arr+i))->getPlayerId();
+        }
+    } catch (std::exception& e) {
+        delete[] player_arr;
+        throw e;
     }
-    for (int i=0; i < n; i++){
-        *((*players)+(n-1-i)) = (*(player_arr+i))->getPlayerId();
-    }
-    delete player_arr;
+    delete[] player_arr;
 }
 
-void CoinTree::insertPlayerByCoin(Tree<Player, Pair>** coin_tree, Pair& key, Player& player) {
+void CoinTree::insertPlayerByCoin(Tree<Player, Pair>** coin_tree, Player& player, Pair& key) {
     (*coin_tree) = (*coin_tree)->insert(key, player);
 }
 
@@ -51,7 +56,7 @@ void CoinTree::removePlayer(Tree<Player, Pair>** coin_tree, int playerId, int co
     delete p;
 }
 
-void CoinTree::deleteTree(Tree<Player, Pair>* coin_tree) {
-    coin_tree->deleteTree();
+void CoinTree::deleteTree(Tree<Player, Pair>* coin_tree, bool delete_data) {
+    coin_tree->deleteTree(delete_data);
     delete coin_tree;
 }

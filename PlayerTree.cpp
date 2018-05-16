@@ -36,9 +36,8 @@ void Player::incChallenges() {
     this->challenges++;
 }
 
-void PlayerTree::insertPlayer(Tree<Player, int>** player_tree, Player& player) {
-    int *player_id = new int(player.getPlayerId());
-    (*player_tree) = (*player_tree)->insert(*player_id, player);
+void PlayerTree::insertPlayer(Tree<Player, int>** player_tree, Player& player, int& id_key) {
+    (*player_tree) = (*player_tree)->insert(id_key, player);
 }
 
 void PlayerTree::removePlayer(Tree<Player, int>** player_tree, int playerId){
@@ -61,7 +60,7 @@ void PlayerTree::completeChallenge(Tree<Player, int>* player_tree, int playerId,
     player.incChallenges();
 }
 
-void PlayerTree::deleteTree(Tree<Player,int>* player_tree) {
-    player_tree->deleteTree();
+void PlayerTree::deleteTree(Tree<Player,int>* player_tree, bool delete_data) {
+    player_tree->deleteTree(delete_data);
     delete player_tree;
 }

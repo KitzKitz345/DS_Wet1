@@ -23,7 +23,7 @@ public:
     Player* getBestPlayer();
     int getSize();
     void getPlayers(Player** player_arr);
-    void joinClan(Player& new_player);
+    void joinClan(Player& new_player, Pair& pair_key, int& id_key);
     void removePlayerFromClanPlayersTree(Player& player);
     void removePlayerFromClanCoins(Player& player);
     void insertPlayerToClanCoins(Pair& key, Player& player);
@@ -35,7 +35,7 @@ namespace ClanTree{
 
     class AlreadyInClan : public std::exception {};
 
-    void addClan(Tree<Clan, int>** clan_tree, int id);
+    void addClan(Tree<Clan, int>** clan_tree, Clan& clan, int& key);
     void uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2);
     void deleteTree(Tree<Clan, int>* clan_tree);
 }
