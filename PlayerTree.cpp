@@ -47,6 +47,9 @@ void PlayerTree::removePlayer(Tree<Player, int>** player_tree, int playerId){
     if (current_root->getData().getPlayerId() == playerId){
         delete current_root;
     }
+    if ((*player_tree) == nullptr) {
+        (*player_tree) = new Tree<Player, int>();
+    }
     delete p;
 }
 
