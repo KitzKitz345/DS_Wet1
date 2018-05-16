@@ -125,7 +125,7 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
                 }
             }
         } catch (std::exception& e) {
-            delete to_player_arr;
+            delete[] to_player_arr;
             throw e;
         }
         delete[] to_player_arr;
@@ -154,20 +154,19 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
                 }
                 delete[] player_arr;
             } catch (std::exception& e) {
-                delete player_arr;
+                delete[] player_arr;
                 throw e;
             }
 
         }
+        Tree<Clan, int>* current_root = (*clan_tree);
+        (*clan_tree) = (*clan_tree)->remove(*id_to_remove);
+        if (current_root->getData().getClanId() == *id_to_remove){
+            delete current_root;
+        }
     } catch (std::exception& e) {
         delete id_to_remove;
         throw e;
-    }
-
-    Tree<Clan, int>* current_root = (*clan_tree);
-    (*clan_tree) = (*clan_tree)->remove(*id_to_remove);
-    if (current_root->getData().getClanId() == *id_to_remove){
-        delete current_root;
     }
     delete id_to_remove;
     /*if (from->getSize() != 0) {
