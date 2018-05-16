@@ -14,10 +14,10 @@ Clan::Clan(int id): clan_id(id), players(nullptr), players_by_coins(nullptr),
 }
 
 Clan::~Clan(){
-    //delete players;
-    //delete players_by_coins;
     PlayerTree::deleteTree(this->players);
+    this->players = nullptr;
     CoinTree::deleteTree(this->players_by_coins);
+    this->players_by_coins = nullptr;
 }
 
 int Clan::getClanId() {

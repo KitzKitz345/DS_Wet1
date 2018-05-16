@@ -13,9 +13,11 @@ Oasis::Oasis() : players(nullptr), clans(nullptr), players_by_coins(nullptr), be
 
 Oasis::~Oasis() {
     ClanTree::deleteTree(this->clans);
+    this->clans = nullptr;
     PlayerTree::deleteTree(this->players);
+    this->players = nullptr;
     CoinTree::deleteTree(this->players_by_coins);
-    //PlayerTree::deleteTree(this->players);
+    this->players_by_coins = nullptr;
 }
 
 void Oasis::insertPlayer(Player& player) {

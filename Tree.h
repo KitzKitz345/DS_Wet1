@@ -6,6 +6,7 @@
 #define CODE_TREE_H
 
 #include <exception>
+#define nullptr 0
 
 template <class Data, class Key>
 class Tree {
@@ -465,11 +466,13 @@ public:
 
     void deleteTree () {
         if (this->data == nullptr) {
-            throw EmptyTree(); // need to catch this somewhere
+            return;
+            //throw EmptyTree(); not relevant to this usage
         }
         if ((this->lson != nullptr && this->lson->lson != nullptr) ||
             (this->lson != nullptr && this->lson->rson != nullptr)) {
             this->lson->deleteTree();
+            this->lson = nullptr;
         }
         /*if (this->lson != nullptr && this->lson->rson != nullptr) {
             this->lson->deleteTree();
@@ -477,6 +480,7 @@ public:
         if ((this->rson != nullptr && this->rson->lson != nullptr) ||
             (this->rson != nullptr && this->rson->rson != nullptr)) {
             this->rson->deleteTree();
+            this->rson = nullptr;
         }
         /*if (this->rson != nullptr && this->rson->rson != nullptr) {
             this->rson->deleteTree();
