@@ -170,9 +170,10 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
         delete current_root;
     }
     delete id_to_remove;
-    if (from->getSize() != 0) {
+    /*if (from->getSize() != 0) {
         delete from;
-    }
+    }*/
+    delete from;
 }
 
 void ClanTree::deleteTree(Tree<Clan, int>* clan_tree) {
