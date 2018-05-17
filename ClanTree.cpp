@@ -20,20 +20,35 @@ Clan::~Clan(){
     this->players_by_coins = nullptr;
 }
 
-int Clan::getClanId() {
+bool Clan::operator>(const Clan& p) const {
+    if (this->getSize() > p.getSize()) {
+        return true;
+    } else if (this->getSize() == p.getSize()) {
+        if (this->getClanId() < p.getClanId()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int Clan::getClanId() const{
     return this->clan_id;
 }
 
-Player* Clan::getBestPlayer() {
+Player* Clan::getBestPlayer() const{
     return this->best_player;
 }
 
-int Clan::getSize(){
+int Clan::getSize() const{
     return this->players->getSize();
 }
 
-void Clan::getPlayers(Player** player_arr){
+void Clan::getPlayersById(Player** player_arr) const{
     this->players->inorder(player_arr);
+}
+
+void Clan::getPlayersByCoin(Player** player_arr) const{
+    this->players_by_coins->inorder(player_arr);
 }
 
 void Clan::joinClan(Player &new_player, Pair& pair_key, int& id_key) {
@@ -54,7 +69,7 @@ void Clan::joinClan(Player &new_player, Pair& pair_key, int& id_key) {
     CoinTree::insertPlayerByCoin(&(this->players_by_coins), new_player, pair_key);
 }
 
-void Clan::getScoreBoard(int **players, int *numOfPlayers){
+void Clan::getScoreBoard(int **players, int *numOfPlayers) const{
     if (this->players == nullptr){
         *players = nullptr;
         *numOfPlayers = 0;
@@ -98,82 +113,101 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
     }
     Clan* to = nullptr;
     Clan* from = nullptr;
-    if (clan1->getSize() > clan2->getSize()){
+    if (clan1 > clan2){
         to = clan1;
         from = clan2;
-    } else if (clan1->getSize() < clan2->getSize()){
+    } else {
         to = clan2;
         from = clan1;
-    } else {
-        if(id1 < id2){
-          to = clan1;
-          from = clan2;
-        } else {
-            to = clan2;
-            from = clan1;
-        }
     }
     int n_to = to->getSize();
+    Player** to_player_player_arr = nullptr;
+    Player** to_player_coin_arr = nullptr;
     if (n_to != 0){
-        Player** to_player_arr = new Player*[n_to];
+        to_player_player_arr = new Player*[n_to];
+        to_player_coin_arr = new Player*[n_to];
         try {
-            to->getPlayers(to_player_arr);
-            for(int i = 0; i < n_to; i++){
-                if ((*(to_player_arr+i))->getChallenges() == 0){
-                    to->removePlayerFromClanPlayersTree(**(to_player_arr+i));
-                    to->removePlayerFromClanCoins(**(to_player_arr+i));
-                }
-            }
+            to->getPlayersById(to_player_player_arr);
+            to->getPlayersByCoin(to_player_coin_arr);
         } catch (std::exception& e) {
-            delete[] to_player_arr;
+            delete[] to_player_player_arr;
+            delete[] to_player_coin_arr;
             throw e;
         }
-        delete[] to_player_arr;
     }
-    int n = from->getSize();
-    int* id_to_remove = new int(from->getClanId());
-    try {
-        if(n != 0){
-            Player** player_arr = new Player*[n];
-            try {
-                from->getPlayers(player_arr);
-                for(int i = 0; i < n; i++){
-                    (*(player_arr+i))->setClan(nullptr);
-                    if ((*(player_arr+i))->getChallenges() != 0){
-                        int* id_key = new int((*(player_arr+i))->getPlayerId());
-                        Pair* pair_key =  new Pair((*(player_arr+i))->getPlayerId(), (*(player_arr+i))
-                                ->getCoins());
-                        try {
-                            to->joinClan(**(player_arr+i), *pair_key, *id_key);
-                        } catch (std::exception& e) {
-                            delete id_key;
-                            delete pair_key;
-                            throw e;
-                        }
-                    }
-                }
-                delete[] player_arr;
-            } catch (std::exception& e) {
-                delete[] player_arr;
-                throw e;
-            }
-
+    int n_from = from->getSize();
+    Player** from_player_player_arr = nullptr;
+    Player** from_player_coin_arr = nullptr;
+    if (n_from != 0){
+        from_player_player_arr = new Player*[n_from];
+        from_player_coin_arr = new Player*[n_from];
+        try {
+            from->getPlayersById(from_player_player_arr);
+            from->getPlayersByCoin(from_player_coin_arr);
+        } catch (std::exception& e) {
+            delete[] from_player_player_arr;
+            delete[] from_player_coin_arr;
+            delete[] to_player_player_arr;
+            delete[] to_player_coin_arr;
+            throw e;
         }
-        Tree<Clan, int>* current_root = (*clan_tree);
-        (*clan_tree) = (*clan_tree)->remove(*id_to_remove);
-        if (current_root->getData().getClanId() == *id_to_remove){
-            delete current_root;
-        }
-    } catch (std::exception& e) {
-        delete id_to_remove;
-        throw e;
     }
-    delete id_to_remove;
-    /*if (from->getSize() != 0) {
-        delete from;
-    }*/
+    int* to_id_key = new int(to->getClanId());
+    int* from_id_key = new int(from->getClanId());
+    Tree<Clan, int>* current_root = (*clan_tree);
+    (*clan_tree) = (*clan_tree)->remove(*to_id_key);
+    if (current_root->getData().getClanId() == *to_id_key){
+        delete current_root;
+    }
+    (*clan_tree) = (*clan_tree)->remove(*from_id_key);
+    if (current_root->getData().getClanId() == *from_id_key){
+        delete current_root;
+    }
     delete from;
+    delete from_id_key;
+    Clan* new_empty_clan = new Clan(to->getClanId());
+    delete to;
+    ClanTree::addClan(clan_tree, *new_empty_clan, *to_id_key);
+    for (int i=0, j=0; i<n_to, j<n_from;){
+        //iterate over the coin player arrays
+    }
+    for (int i=0, j=0; i<n_to, j<n_from;){
+        //iterate over the player arrays
+    }
+    delete[] from_player_player_arr;
+    delete[] from_player_coin_arr;
+    delete[] to_player_player_arr;
+    delete[] to_player_coin_arr;
 }
+
+    /*
+for(int i = 0; i < from_n; i++){
+    (*(player_arr+i))->setClan(nullptr);
+    if ((*(player_arr+i))->getChallenges() != 0){
+        int* id_key = new int((*(player_arr+i))->getPlayerId());
+        Pair* pair_key =  new Pair((*(player_arr+i))->getPlayerId(), (*(player_arr+i))
+                ->getCoins());
+        try {
+            to->joinClan(**(player_arr+i), *pair_key, *id_key);
+        } catch (std::exception& e) {
+            delete id_key;
+            delete pair_key;
+            throw e;
+        }
+    }
+}
+delete[] player_arr;
+ */
+    /*
+for(int i = 0; i < n_to; i++){
+    if ((*(to_player_arr+i))->getChallenges() == 0){
+        to->removePlayerFromClanPlayersTree(**(to_player_arr+i));
+        to->removePlayerFromClanCoins(**(to_player_arr+i));
+    }
+}
+ */
+
+
 
 void ClanTree::deleteTree(Tree<Clan, int>* clan_tree) {
     clan_tree->deleteTree(true);

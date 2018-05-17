@@ -19,15 +19,17 @@ public:
     explicit Clan(int id);
     ~Clan();
     Clan(const Clan& clan) = delete;
-    int getClanId();
-    Player* getBestPlayer();
-    int getSize();
-    void getPlayers(Player** player_arr);
+    bool operator>(const Clan& p) const;
+    int getClanId() const;
+    Player* getBestPlayer() const;
+    int getSize() const;
+    void getPlayersById(Player** player_arr) const;
+    void getPlayersByCoin(Player** player_arr) const;
     void joinClan(Player& new_player, Pair& pair_key, int& id_key);
     void removePlayerFromClanPlayersTree(Player& player);
     void removePlayerFromClanCoins(Player& player);
     void insertPlayerToClanCoins(Pair& key, Player& player);
-    void getScoreBoard(int **players, int *numOfPlayers);
+    void getScoreBoard(int **players, int *numOfPlayers) const;
     void completedChallenge(Player& player);
 };
 
