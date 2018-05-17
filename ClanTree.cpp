@@ -251,6 +251,18 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
         to = clan2;
         from = clan1;
     }
+    if (to->getSize() == 0 && from->getSize() == 0){
+        int* from_id_key = new int(from->getClanId());
+        Tree<Clan, int>* current_root = (*clan_tree);
+        int current_root_id = current_root->getData().getClanId();
+        (*clan_tree) = (*clan_tree)->remove(*from_id_key);
+        if (current_root_id == *from_id_key){
+            delete current_root;
+        }
+        delete from;
+        delete from_id_key;
+        return;
+    }
     int n_from = from->getSize();
     Player** from_player_player_arr = nullptr;
     Player** from_player_coin_arr = nullptr;
@@ -282,22 +294,25 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
     int* to_id_key = new int(to->getClanId());
     int* from_id_key = new int(from->getClanId());
     Tree<Clan, int>* current_root = (*clan_tree);
+    int current_root_id = current_root->getData().getClanId();
     (*clan_tree) = (*clan_tree)->remove(*to_id_key);
-    if (current_root->getData().getClanId() == *to_id_key){
+    if (current_root_id == *to_id_key){
         delete current_root;
     }
+    current_root = (*clan_tree);
+    current_root_id = current_root->getData().getClanId();
     (*clan_tree) = (*clan_tree)->remove(*from_id_key);
-    if (current_root->getData().getClanId() == *from_id_key){
+    if (current_root_id == *from_id_key){
         delete current_root;
+    }
+    if ((*clan_tree) == nullptr){
+        (*clan_tree) = new Tree<Clan,int>();
     }
     delete from;
     delete from_id_key;
     Clan* new_empty_clan = new Clan(to->getClanId());
     delete to;
     ClanTree::addClan(clan_tree, *new_empty_clan, *to_id_key);
-    if (n_to == 0 && n_from == 0){
-        return;
-    }
     if (n_from == 0){
         for(int i = 0; i < n_to; i++) {
             if ((*(to_player_player_arr+i))->getChallenges() != 0) {
@@ -306,6 +321,7 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
                     new_empty_clan->insertPlayerToClanPlayersTree(*id_key, **(to_player_player_arr+i));
                 } catch (std::exception& e){
                     delete id_key;
+                    throw e;
                 }
                 (*(to_player_player_arr+i))->setClan(new_empty_clan);
             } else {
@@ -317,6 +333,7 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
                     new_empty_clan->insertPlayerToClanCoins(*pair_key, **(to_player_coin_arr+i));
                 } catch (std::exception& e){
                     delete pair_key;
+                    throw e;
                 }
                 (*(to_player_coin_arr + i))->setClan(new_empty_clan);
             } else {
@@ -361,6 +378,7 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
         delete[] final_array;
         throw e;
     }
+    delete[] final_array;
 }
 
 
