@@ -22,15 +22,19 @@ public:
     bool operator>(const Clan& p) const;
     int getClanId() const;
     Player* getBestPlayer() const;
+    void setBestPlayer(Player* player);
     int getSize() const;
     void getPlayersById(Player** player_arr) const;
     void getPlayersByCoin(Player** player_arr) const;
     void joinClan(Player& new_player, Pair& pair_key, int& id_key);
-    void removePlayerFromClanPlayersTree(Player& player);
+    void insertPlayerToClanPlayersTree(int& key, Player& player);
     void removePlayerFromClanCoins(Player& player);
     void insertPlayerToClanCoins(Pair& key, Player& player);
     void getScoreBoard(int **players, int *numOfPlayers) const;
     void completedChallenge(Player& player);
+    void getClanTreesIntoArrays(Player*** By_Id, Player*** By_coins);
+    void insertPlayersInorderFromTwoArraysById(Player** array1, int n1, Player** array2, int n2);
+    void insertPlayersInorderFromTwoArraysByCoins(Player** array1, int n1, Player** array2, int n2);
 };
 
 namespace ClanTree{
