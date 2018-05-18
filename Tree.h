@@ -430,11 +430,15 @@ public:
 
     Tree* remove(Key& key){
         Tree* T = &(this->find(key));
-        if (this->lson == nullptr && this->rson == nullptr){
+        if (this->lson == nullptr && this->rson == nullptr) {
             return nullptr;
-        } else if (this->lson != nullptr && this->rson == nullptr){
+        } else if (this->lson != nullptr && this->rson == nullptr && (*(this->key) == key)){
+            this->lson->father = nullptr;
+            this->lson = nullptr;
             return lson;
-        } else if (this->rson != nullptr && this->lson == nullptr){
+        } else if (this->rson != nullptr && this->lson == nullptr && (*(this->key) == key)){
+            this->rson->father = nullptr;
+            this->rson = nullptr;
             return rson;
         }
         if (*(T->key) != key){
