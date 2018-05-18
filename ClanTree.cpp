@@ -360,25 +360,27 @@ void ClanTree::uniteClans(Tree<Clan, int>** clan_tree, int id1, int id2){
     }
     delete[] to_player_player_arr;
     delete[] to_player_coin_arr;
-    Player** final_array = new Player*[new_empty_clan->getSize()];
-    try{
-        new_empty_clan->getPlayersById(final_array);
-        Player* best = *final_array;
-        for (int l=0; l < new_empty_clan->getSize(); l++){
-            if ((*(final_array+l))->getChallenges() > best->getChallenges()){
-                best = *(final_array+l);
-            } else if((*(final_array+l))->getChallenges() == best->getChallenges()) {
-                if ((*(final_array+l))->getPlayerId() < best->getPlayerId()) {
+    if (new_empty_clan->getSize() != 0){
+        Player** final_array = new Player*[new_empty_clan->getSize()];
+        try{
+            new_empty_clan->getPlayersById(final_array);
+            Player* best = *final_array;
+            for (int l=0; l < new_empty_clan->getSize(); l++){
+                if ((*(final_array+l))->getChallenges() > best->getChallenges()){
                     best = *(final_array+l);
+                } else if((*(final_array+l))->getChallenges() == best->getChallenges()) {
+                    if ((*(final_array+l))->getPlayerId() < best->getPlayerId()) {
+                        best = *(final_array+l);
+                    }
                 }
             }
+            new_empty_clan->setBestPlayer(best);
+        }catch (std::exception& e) {
+            delete[] final_array;
+            throw e;
         }
-        new_empty_clan->setBestPlayer(best);
-    }catch (std::exception& e) {
         delete[] final_array;
-        throw e;
     }
-    delete[] final_array;
 }
 
 
