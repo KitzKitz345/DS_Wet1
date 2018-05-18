@@ -69,32 +69,12 @@ void checkAddPlayer(void* oasis,int the_challenger,int size,int* score_board){
 }
 
 void checkAddClan(void* oasis){
-    /*for(int i=0;i<20;i++){
+    for(int i=0;i<20;i++){
         if(!i)
             assert(addClan(oasis,21)==SUCCESS);
         else
             assert(addClan(oasis,i)==SUCCESS);
-    }*/
-    assert(addClan(oasis,21)==SUCCESS);
-    assert(addClan(oasis,1)==SUCCESS);
-    assert(addClan(oasis,2)==SUCCESS);
-    assert(addClan(oasis,3)==SUCCESS);
-    assert(addClan(oasis,4)==SUCCESS);
-    assert(addClan(oasis,5)==SUCCESS);
-    assert(addClan(oasis,6)==SUCCESS);
-    assert(addClan(oasis,7)==SUCCESS);
-    assert(addClan(oasis,8)==SUCCESS);
-    assert(addClan(oasis,9)==SUCCESS);
-    assert(addClan(oasis,10)==SUCCESS);
-    assert(addClan(oasis,11)==SUCCESS);
-    assert(addClan(oasis,12)==SUCCESS);
-    assert(addClan(oasis,13)==SUCCESS);
-    assert(addClan(oasis,14)==SUCCESS);
-    assert(addClan(oasis,15)==SUCCESS);
-    assert(addClan(oasis,16)==SUCCESS);
-    assert(addClan(oasis,17)==SUCCESS);
-    assert(addClan(oasis,18)==SUCCESS);
-    assert(addClan(oasis,19)==SUCCESS);
+    }
     for(int i=1;i<20;i++){
         assert(addClan(oasis,i)==FAILURE);
     }
