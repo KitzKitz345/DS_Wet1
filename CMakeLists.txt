@@ -16,7 +16,7 @@ set(SOURCE_FILES
         Oasis.cpp
         library1.h
         library1.cpp
-        main.cpp
+        main1.cpp
         )
 
 add_executable(Oasis ${SOURCE_FILES})

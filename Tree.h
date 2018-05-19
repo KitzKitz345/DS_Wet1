@@ -433,13 +433,17 @@ public:
         if (this->lson == nullptr && this->rson == nullptr) {
             return nullptr;
         } else if (this->lson != nullptr && this->rson == nullptr && (*(this->key) == key)){
+            Tree* root_lson = this->lson;   //new
             this->lson->father = nullptr;
             this->lson = nullptr;
-            return lson;
+            //return lson;
+            return root_lson;   // new
         } else if (this->rson != nullptr && this->lson == nullptr && (*(this->key) == key)){
+            Tree* root_rson = this->rson;    //new
             this->rson->father = nullptr;
             this->rson = nullptr;
-            return rson;
+            //return rson;
+            return root_rson;  //new
         }
         if (*(T->key) != key){
             throw DoesNotExist();
